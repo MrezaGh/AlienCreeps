@@ -1,12 +1,15 @@
 package view;
 
+import javafx.css.Styleable;
 import javafx.scene.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -98,6 +101,7 @@ public class StartScene extends Scene {
         Button quitButton = new Button();
         Button toturialButton = new Button();
         Font nazaninKoochick = new Font("B Nazanin",18);
+        Border buttonborder = new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.DOTTED, CornerRadii.EMPTY,BorderWidths.DEFAULT));
 
 
         playButton.setText(currentLanguage.get("play"));
@@ -105,9 +109,59 @@ public class StartScene extends Scene {
         playButton.setStyle("-fx-font-weight: bold;");
         playButton.relocate(100,200);
         playButton.setMinSize(100,30);
+        playButton.setTextFill(Color.GREEN);
         //Effect buttonEffect = new //ino badan bebinam chie
         DropShadow dropShadow = new DropShadow(BlurType.TWO_PASS_BOX,Color.GRAY,5,0.001,10,10);
         playButton.setEffect(dropShadow);
+        playButton.setStyle("-fx-background-color: \n" +
+                "        #090a0c,\n" +
+                "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                "        linear-gradient(#20262b, #191d22),\n" +
+                "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                "    -fx-background-radius: 5,4,3,5;\n" +
+                "    -fx-background-insets: 0,1,2,0;\n" +
+                "    -fx-text-fill: white;\n" +
+                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                "    -fx-font-size: 12px;\n" +
+                "    -fx-padding: 10 20 10 20;"+
+                "-fx-font-weight: bold;");
+        playButton.setOnMouseEntered(event -> {
+            playButton.setStyle("-fx-background-color: \n" +
+                    "        #a6b5c9,\n" +
+                    "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
+                    "        linear-gradient(#020b02, #3a3a3a),\n" +
+                    "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+        playButton.setOnMouseExited(event -> {
+            playButton.setStyle("-fx-background-color: \n" +
+                    "        #090a0c,\n" +
+                    "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                    "        linear-gradient(#20262b, #191d22),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+
+
         try {
             Image image = new Image(new FileInputStream(new File("images\\playCursor.png")));
             playButton.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));
@@ -123,6 +177,55 @@ public class StartScene extends Scene {
         resumeButton.relocate(100,270);
         resumeButton.setMinSize(100,30);
         resumeButton.setEffect(dropShadow);
+        resumeButton.setStyle("-fx-background-color: \n" +
+                "        #090a0c,\n" +
+                "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                "        linear-gradient(#20262b, #191d22),\n" +
+                "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                "    -fx-background-radius: 5,4,3,5;\n" +
+                "    -fx-background-insets: 0,1,2,0;\n" +
+                "    -fx-text-fill: white;\n" +
+                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                "    -fx-font-size: 12px;\n" +
+                "    -fx-padding: 10 20 10 20;"+
+                "-fx-font-weight: bold;");
+        resumeButton.setOnMouseEntered(event -> {
+            resumeButton.setStyle("-fx-background-color: \n" +
+                    "        #a6b5c9,\n" +
+                    "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
+                    "        linear-gradient(#020b02, #3a3a3a),\n" +
+                    "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+        resumeButton.setOnMouseExited(event -> {
+            resumeButton.setStyle("-fx-background-color: \n" +
+                    "        #090a0c,\n" +
+                    "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                    "        linear-gradient(#20262b, #191d22),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+
+
         try {
             Image image = new Image(new FileInputStream(new File("images\\bow-and-arrowCursor.png")));
             resumeButton.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));
@@ -137,6 +240,55 @@ public class StartScene extends Scene {
         loadButton.relocate(100,340);
         loadButton.setMinSize(100,30);
         loadButton.setEffect(dropShadow);
+        loadButton.setStyle("-fx-background-color: \n" +
+                "        #090a0c,\n" +
+                "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                "        linear-gradient(#20262b, #191d22),\n" +
+                "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                "    -fx-background-radius: 5,4,3,5;\n" +
+                "    -fx-background-insets: 0,1,2,0;\n" +
+                "    -fx-text-fill: white;\n" +
+                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                "    -fx-font-size: 12px;\n" +
+                "    -fx-padding: 10 20 10 20;"+
+                "-fx-font-weight: bold;");
+        loadButton.setOnMouseEntered(event -> {
+            loadButton.setStyle("-fx-background-color: \n" +
+                    "        #a6b5c9,\n" +
+                    "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
+                    "        linear-gradient(#020b02, #3a3a3a),\n" +
+                    "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+        loadButton.setOnMouseExited(event -> {
+            loadButton.setStyle("-fx-background-color: \n" +
+                    "        #090a0c,\n" +
+                    "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                    "        linear-gradient(#20262b, #191d22),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+
+
         try {
             Image image = new Image(new FileInputStream(new File("images\\axeCursor.png")));
             loadButton.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));
@@ -151,6 +303,55 @@ public class StartScene extends Scene {
         changeLanguage.relocate(100,410);
         changeLanguage.setMinSize(100,30);
         changeLanguage.setEffect(dropShadow);
+        changeLanguage.setStyle("-fx-background-color: \n" +
+                "        #090a0c,\n" +
+                "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                "        linear-gradient(#20262b, #191d22),\n" +
+                "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                "    -fx-background-radius: 5,4,3,5;\n" +
+                "    -fx-background-insets: 0,1,2,0;\n" +
+                "    -fx-text-fill: white;\n" +
+                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                "    -fx-font-size: 12px;\n" +
+                "    -fx-padding: 10 20 10 20;"+
+                "-fx-font-weight: bold;");
+        changeLanguage.setOnMouseEntered(event -> {
+            changeLanguage.setStyle("-fx-background-color: \n" +
+                    "        #a6b5c9,\n" +
+                    "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
+                    "        linear-gradient(#020b02, #3a3a3a),\n" +
+                    "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+        changeLanguage.setOnMouseExited(event -> {
+            changeLanguage.setStyle("-fx-background-color: \n" +
+                    "        #090a0c,\n" +
+                    "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                    "        linear-gradient(#20262b, #191d22),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+
+
         try {
             Image image = new Image(new FileInputStream(new File("images\\baseballCursor.png")));
             changeLanguage.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));
@@ -166,6 +367,55 @@ public class StartScene extends Scene {
         toturialButton.setMinSize(100,30);
         toturialButton.setCursor(Cursor.CROSSHAIR);
         toturialButton.setEffect(dropShadow);
+        toturialButton.setStyle("-fx-background-color: \n" +
+                "        #090a0c,\n" +
+                "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                "        linear-gradient(#20262b, #191d22),\n" +
+                "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                "    -fx-background-radius: 5,4,3,5;\n" +
+                "    -fx-background-insets: 0,1,2,0;\n" +
+                "    -fx-text-fill: white;\n" +
+                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                "    -fx-font-size: 12px;\n" +
+                "    -fx-padding: 10 20 10 20;"+
+                "-fx-font-weight: bold;");
+        toturialButton.setOnMouseEntered(event -> {
+            toturialButton.setStyle("-fx-background-color: \n" +
+                    "        #a6b5c9,\n" +
+                    "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
+                    "        linear-gradient(#020b02, #3a3a3a),\n" +
+                    "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+        toturialButton.setOnMouseExited(event -> {
+            toturialButton.setStyle("-fx-background-color: \n" +
+                    "        #090a0c,\n" +
+                    "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                    "        linear-gradient(#20262b, #191d22),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+
+
 
         quitButton.setText(currentLanguage.get("quit"));
         quitButton.setFont(nazaninKoochick);
@@ -173,6 +423,55 @@ public class StartScene extends Scene {
         quitButton.relocate(100,550);
         quitButton.setMinSize(100,30);
         quitButton.setEffect(dropShadow);
+        quitButton.setStyle("-fx-background-color: \n" +
+                "        #090a0c,\n" +
+                "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                "        linear-gradient(#20262b, #191d22),\n" +
+                "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                "    -fx-background-radius: 5,4,3,5;\n" +
+                "    -fx-background-insets: 0,1,2,0;\n" +
+                "    -fx-text-fill: white;\n" +
+                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                "    -fx-font-size: 12px;\n" +
+                "    -fx-padding: 10 20 10 20;"+
+                "-fx-font-weight: bold;");
+        quitButton.setOnMouseEntered(event -> {
+            quitButton.setStyle("-fx-background-color: \n" +
+                    "        #a6b5c9,\n" +
+                    "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
+                    "        linear-gradient(#020b02, #3a3a3a),\n" +
+                    "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+        quitButton.setOnMouseExited(event -> {
+            quitButton.setStyle("-fx-background-color: \n" +
+                    "        #090a0c,\n" +
+                    "        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),\n" +
+                    "        linear-gradient(#20262b, #191d22),\n" +
+                    "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                    "    -fx-background-radius: 5,4,3,5;\n" +
+                    "    -fx-background-insets: 0,1,2,0;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                    "    -fx-font-family: \"Arial\";\n" +
+                    "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                    "    -fx-font-size: 12px;\n" +
+                    "    -fx-padding: 10 20 10 20;"+
+                    "-fx-font-weight: bold;");
+        });
+
+
         try {
             Image image = new Image(new FileInputStream(new File("images\\quitCursor.png")));
             quitButton.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));
