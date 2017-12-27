@@ -1,9 +1,6 @@
 package view;
 
-import javafx.scene.Cursor;
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
@@ -81,7 +78,17 @@ public class StartScene extends Scene {
         root.getChildren().add(label);
 
 
+        //cursor image
+        try {
+        Image image = new Image(new FileInputStream(new File("images\\swordsCursor.png")));
+            this.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
 
+        //Image image2 = new Image()
+        //this.setCursor(new ImageCursor(image));
 
         //start menu buttons
         Button playButton = new Button();
@@ -98,10 +105,16 @@ public class StartScene extends Scene {
         playButton.setStyle("-fx-font-weight: bold;");
         playButton.relocate(100,200);
         playButton.setMinSize(100,30);
-        playButton.setCursor(Cursor.CROSSHAIR);
         //Effect buttonEffect = new //ino badan bebinam chie
         DropShadow dropShadow = new DropShadow(BlurType.TWO_PASS_BOX,Color.GRAY,5,0.001,10,10);
         playButton.setEffect(dropShadow);
+        try {
+            Image image = new Image(new FileInputStream(new File("images\\playCursor.png")));
+            playButton.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
 
 
         resumeButton.setText(currentLanguage.get("resume"));
@@ -109,31 +122,49 @@ public class StartScene extends Scene {
         resumeButton.setStyle("-fx-font-weight: bold;");
         resumeButton.relocate(100,270);
         resumeButton.setMinSize(100,30);
-        resumeButton.setCursor(Cursor.CROSSHAIR);
         resumeButton.setEffect(dropShadow);
+        try {
+            Image image = new Image(new FileInputStream(new File("images\\bow-and-arrowCursor.png")));
+            resumeButton.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
 
         loadButton.setText(currentLanguage.get("load"));
         loadButton.setFont(nazaninKoochick);
         loadButton.setStyle("-fx-font-weight: bold;");
         loadButton.relocate(100,340);
         loadButton.setMinSize(100,30);
-        loadButton.setCursor(Cursor.HAND);
         loadButton.setEffect(dropShadow);
+        try {
+            Image image = new Image(new FileInputStream(new File("images\\axeCursor.png")));
+            loadButton.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
 
         changeLanguage.setText(currentLanguage.get("change language"));
         changeLanguage.setFont(nazaninKoochick);
         changeLanguage.setStyle("-fx-font-weight: bold;");
         changeLanguage.relocate(100,410);
         changeLanguage.setMinSize(100,30);
-        changeLanguage.setCursor(Cursor.CLOSED_HAND);
         changeLanguage.setEffect(dropShadow);
+        try {
+            Image image = new Image(new FileInputStream(new File("images\\baseballCursor.png")));
+            changeLanguage.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
 
         toturialButton.setText(currentLanguage.get("tutorial"));
         toturialButton.setFont(nazaninKoochick);
         toturialButton.setStyle("-fx-font-weight: bold;");
         toturialButton.relocate(100,480);
         toturialButton.setMinSize(100,30);
-        toturialButton.setCursor(Cursor.HAND);
+        toturialButton.setCursor(Cursor.CROSSHAIR);
         toturialButton.setEffect(dropShadow);
 
         quitButton.setText(currentLanguage.get("quit"));
@@ -141,8 +172,14 @@ public class StartScene extends Scene {
         quitButton.setStyle("-fx-font-weight: bold;");
         quitButton.relocate(100,550);
         quitButton.setMinSize(100,30);
-        quitButton.setCursor(Cursor.OPEN_HAND);
         quitButton.setEffect(dropShadow);
+        try {
+            Image image = new Image(new FileInputStream(new File("images\\quitCursor.png")));
+            quitButton.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
 
         root.getChildren().addAll(playButton,resumeButton,loadButton,changeLanguage,quitButton,toturialButton);
 
