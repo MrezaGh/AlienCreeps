@@ -1,6 +1,8 @@
 package view;
 
 import javafx.css.Styleable;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -500,6 +502,14 @@ public class StartScene extends Scene {
         //quit button
         quitButton.setOnAction(event -> {
             stage.close();
+        });
+        //play button todo
+        playButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                MainScene mainScene = new MainScene(new Group(), 1280, 960, Color.GRAY, stage);
+                stage.setScene(mainScene);
+            }
         });
     }
 }
