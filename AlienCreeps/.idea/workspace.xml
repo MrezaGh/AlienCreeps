@@ -15,8 +15,8 @@
       <file leaf-file-name="Graphic.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/Graphic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="12" column="31" lean-forward="false" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+            <state relative-caret-position="374">
+              <caret line="33" column="22" lean-forward="true" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -24,22 +24,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainScene.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainScene.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/MainScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="53" column="12" lean-forward="false" selection-start-line="53" selection-start-column="12" selection-end-line="53" selection-end-column="12" />
+            <state relative-caret-position="273">
+              <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5614#5615#0" expanded="true" />
-                <element signature="e#5647#5648#0" expanded="true" />
-                <element signature="e#5700#5701#0" expanded="true" />
-                <element signature="e#5744#5745#0" expanded="true" />
-                <element signature="e#5789#5790#0" expanded="true" />
-                <element signature="e#5830#5831#0" expanded="true" />
-                <element signature="e#5899#5900#0" expanded="true" />
-                <element signature="e#5959#5960#0" expanded="true" />
+                <element signature="e#7924#7925#0" expanded="true" />
+                <element signature="e#7957#7958#0" expanded="true" />
+                <element signature="e#8010#8011#0" expanded="true" />
+                <element signature="e#8054#8055#0" expanded="true" />
+                <element signature="e#8099#8100#0" expanded="true" />
+                <element signature="e#8140#8141#0" expanded="true" />
+                <element signature="e#8209#8210#0" expanded="true" />
+                <element signature="e#8269#8270#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Timer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/controller/Timer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="10" column="18" lean-forward="false" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -47,8 +57,8 @@
       <file leaf-file-name="StartScene.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/StartScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-9130">
-              <caret line="56" column="17" lean-forward="false" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
+            <state relative-caret-position="59">
+              <caret line="444" column="60" lean-forward="true" selection-start-line="444" selection-start-column="60" selection-end-line="444" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -86,9 +96,10 @@
         <option value="$PROJECT_DIR$/src/com/company/Main.java" />
         <option value="$PROJECT_DIR$/src/main.java" />
         <option value="$PROJECT_DIR$/src/view/MapView.java" />
-        <option value="$PROJECT_DIR$/src/view/Graphic.java" />
         <option value="$PROJECT_DIR$/src/view/StartScene.java" />
         <option value="$PROJECT_DIR$/src/view/MainScene.java" />
+        <option value="$PROJECT_DIR$/src/view/Graphic.java" />
+        <option value="$PROJECT_DIR$/src/controller/Timer.java" />
       </list>
     </option>
   </component>
@@ -137,7 +148,7 @@
               <item name="AlienCreeps" type="b2602c69:ProjectViewProjectNode" />
               <item name="AlienCreeps" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -263,12 +274,12 @@
       <workItem from="1514908048176" duration="117000" />
       <workItem from="1515531303387" duration="704000" />
       <workItem from="1516278431173" duration="139000" />
-      <workItem from="1516785874284" duration="10951000" />
+      <workItem from="1516785874284" duration="17596000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35089000" />
+    <option name="totallyTimeSpent" value="41734000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1098" extended-state="7" />
@@ -645,18 +656,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/StartScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9130">
-          <caret line="56" column="17" lean-forward="false" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/Graphic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="31" lean-forward="false" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+        <state relative-caret-position="59">
+          <caret line="444" column="60" lean-forward="true" selection-start-line="444" selection-start-column="60" selection-end-line="444" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -665,19 +666,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/MainScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="53" column="12" lean-forward="false" selection-start-line="53" selection-start-column="12" selection-end-line="53" selection-end-column="12" />
+        <state relative-caret-position="273">
+          <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5614#5615#0" expanded="true" />
-            <element signature="e#5647#5648#0" expanded="true" />
-            <element signature="e#5700#5701#0" expanded="true" />
-            <element signature="e#5744#5745#0" expanded="true" />
-            <element signature="e#5789#5790#0" expanded="true" />
-            <element signature="e#5830#5831#0" expanded="true" />
-            <element signature="e#5899#5900#0" expanded="true" />
-            <element signature="e#5959#5960#0" expanded="true" />
+            <element signature="e#7924#7925#0" expanded="true" />
+            <element signature="e#7957#7958#0" expanded="true" />
+            <element signature="e#8010#8011#0" expanded="true" />
+            <element signature="e#8054#8055#0" expanded="true" />
+            <element signature="e#8099#8100#0" expanded="true" />
+            <element signature="e#8140#8141#0" expanded="true" />
+            <element signature="e#8209#8210#0" expanded="true" />
+            <element signature="e#8269#8270#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/Graphic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="33" column="22" lean-forward="true" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/Timer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="10" column="18" lean-forward="false" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
