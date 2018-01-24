@@ -31,7 +31,7 @@ public class Graphic extends Application {
         stage.setTitle("Alien Creeps");
         stage.show();
         Timer clock = new Timer();
-        clock.start();
+        //clock.start();
     }
 
 
