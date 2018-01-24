@@ -1,7 +1,7 @@
 package view;
 
 import controller.Timer;
-import javafx.animation.AnimationTimer;
+import controller.TimerOfGame;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -18,14 +18,22 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import controller.Timer;
 
 public class MainScene extends Scene {
 
 
     boolean pauseState = false;
     boolean pauseButtonClicked = false;
+    private Label clock;
+    TimerOfGame timer = new TimerOfGame();
 
+    public Label getClock() {
+        return clock;
+    }
+
+    public void setClock(Label clock) {
+        this.clock = clock;
+    }
 
     public MainScene(Parent root, double width, double height, Paint fill, Stage stage) {
         super(root, width, height, fill);
@@ -35,6 +43,9 @@ public class MainScene extends Scene {
     private void makeMainScene(Scene mainScene, Stage stage) {
         Group root = (Group) mainScene.getRoot();
         root.getChildren().clear();
+
+        Timer.time.setTime(Timer.time.getTime()+1);
+
 
 
         //map image
@@ -46,39 +57,10 @@ public class MainScene extends Scene {
         }
 
 
-//
-//        //map clock
-//        //Timer.activeCount();
-//        AnimationTimer animationTimer = new AnimationTimer() {
-//            int counter = 0;
-//            @Override
-//            public void handle(long now) {
-//                if (counter % 60 == 0){
-//                    Timer.time.setTime(Timer.time.getTime()+1);
-//                    Label clock = new Label(Timer.time.toString());
-//                    clock.relocate(42,42);
-////                    clock.setStyle("-fx-background-color: \n" +
-////                            "        #a6b5c9,\n" +
-////                            "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
-////                            "        linear-gradient(#020b02, #3a3a3a),\n" +
-////                            "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
-////                            "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
-////                            "    -fx-background-radius: 5,4,3,5;\n" +
-////                            "    -fx-background-insets: 0,1,2,0;\n" +
-////                            "    -fx-text-fill: white;\n" +
-////                            "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
-////                            "    -fx-font-family: \"Arial\";\n" +
-////                            "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
-////                            "    -fx-font-size: 12px;\n" +
-////                            "    -fx-padding: 10 20 10 20;"+
-////                            "-fx-font-weight: bold;");
-//                    root.getChildren().add(clock);
-//
-//                    counter++;
-//                }
-//            }
-//        };
-//        animationTimer.start();
+
+        //map clock
+        //Timer.activeCount();
+
 
         //map buttons
 
@@ -102,7 +84,24 @@ public class MainScene extends Scene {
         }
 
 
-
+        clock = new Label(timer.toString());
+        clock.relocate(42,42);
+        clock.setStyle("-fx-background-color: \n" +
+                "        #a6b5c9,\n" +
+                "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
+                "        linear-gradient(#020b02, #3a3a3a),\n" +
+                "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
+                "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                "    -fx-background-radius: 5,4,3,5;\n" +
+                "    -fx-background-insets: 0,1,2,0;\n" +
+                "    -fx-text-fill: white;\n" +
+                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                "    -fx-font-size: 12px;\n" +
+                "    -fx-padding: 10 20 10 20;"+
+                "-fx-font-weight: bold;");
+        root.getChildren().add(clock);
 
     }
 

@@ -1,11 +1,9 @@
 package view;
 
-import javafx.css.Styleable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
@@ -20,9 +18,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.sql.Time;
 import java.util.HashMap;
-import java.util.Timer;
 
 public class StartScene extends Scene {
 
@@ -509,6 +505,7 @@ public class StartScene extends Scene {
         playButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Graphic.setIsMainSceneOrNot(true);
                 MainScene mainScene = new MainScene(new Group(), 1280, 960, Color.GRAY, stage);
                 stage.setScene(mainScene);
             }
