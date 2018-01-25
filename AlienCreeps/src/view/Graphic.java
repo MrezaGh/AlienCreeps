@@ -1,7 +1,6 @@
 package view;
 
 import controller.ControllerClass;
-import controller.Timer;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -66,7 +65,6 @@ public class Graphic extends Application {
         stage.setScene(startScene);
         stage.setTitle("Alien Creeps");
         stage.show();
-        Timer clock = new Timer();
         animationTimer.start();
     }
 

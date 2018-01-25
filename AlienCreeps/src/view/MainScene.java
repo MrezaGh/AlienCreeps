@@ -1,10 +1,8 @@
 package view;
 
-import controller.Timer;
 import controller.TimerOfGame;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -47,15 +45,34 @@ public class MainScene extends Scene {
         Group root = (Group) mainScene.getRoot();
         root.getChildren().clear();
 
-        Timer.time.setTime(Timer.time.getTime()+1);
+
 
 
 
         //map image
+        ImageView[] weapon = new ImageView[8];
         try {
             ImageView background = new ImageView(new Image(new FileInputStream(new File("images/map.png/"))));
-            //ImageView weapon
+            weapon[0] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+
+            weapon[1] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weapon[2] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weapon[3] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weapon[4] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weapon[5] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weapon[6] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weapon[7] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weapon[7].relocate(192,544);
+            weapon[6].relocate(384,320);
+            weapon[5].relocate(608,320);
+            weapon[4].relocate(896,320);
+            weapon[3].relocate(800,544);
+            weapon[2].relocate(800,736);
+            weapon[1].relocate(1056,736);
+            weapon[0].relocate(352,64);
+
             root.getChildren().add(background);
+            root.getChildren().addAll(weapon[0],weapon[1],weapon[2],weapon[3],weapon[4],weapon[5],weapon[6],weapon[7]);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
