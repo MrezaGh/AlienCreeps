@@ -1,4 +1,4 @@
-package view;
+package gameLogic;
 
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -57,14 +57,34 @@ public class Hero {
         drawHero(heroMoveLeftPics,walkState);
     }
 
-    public void moveHeroForward()  {
-        this.setCoordinate(new int[]{getCoordinate()[0],getCoordinate()[1]-5});
+    public void moveHeroForward(int speed)  {
+        this.setCoordinate(new int[]{getCoordinate()[0],getCoordinate()[1]-speed});
         walkState++;
         if (walkState == 4)
             walkState=0;
         drawHero(heroMoveForwardPics,walkState);
     }
-
+    public void moveHeroDownward(int speed)  {
+        this.setCoordinate(new int[]{getCoordinate()[0],getCoordinate()[1]+speed});
+        walkState++;
+        if (walkState == 4)
+            walkState=0;
+        drawHero(heroMoveDownwardPics,walkState);
+    }
+    public void moveHeroLeft(int speed)  {
+        this.setCoordinate(new int[]{getCoordinate()[0]-speed,getCoordinate()[1]});
+        walkState++;
+        if (walkState == 4)
+            walkState=0;
+        drawHero(heroMoveLeftPics,walkState);
+    }
+    public void moveHeroRight(int speed)  {
+        this.setCoordinate(new int[]{getCoordinate()[0]+speed,getCoordinate()[1]});
+        walkState++;
+        if (walkState == 4)
+            walkState=0;
+        drawHero(heroMoveRightPics,walkState);
+    }
     public void drawHero(ImageView[] heroPics, int stateOfWalk) {
 
         try {

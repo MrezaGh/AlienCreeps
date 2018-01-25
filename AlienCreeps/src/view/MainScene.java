@@ -9,12 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import gameLogic.Hero;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -83,12 +82,11 @@ public class MainScene extends Scene {
 
 
 
-
         //key listener
+
         EventHandler<KeyEvent> keyListener = event -> {
-            if (event.getCode() == KeyCode.UP){
-                hero.moveHeroForward();
-            }
+            moveHero(hero, event);
+
             event.consume();
         };
         this.addEventHandler(KeyEvent.KEY_PRESSED,keyListener);
@@ -131,6 +129,37 @@ public class MainScene extends Scene {
                 "-fx-font-weight: bold;");
         root.getChildren().add(clock);
 
+    }
+
+    private void moveHero(Hero hero, KeyEvent event) {
+        KeyCombination upShift = new KeyCodeCombination(KeyCode.UP, KeyCodeCombination.SHIFT_DOWN);
+        KeyCombination downShift = new KeyCodeCombination(KeyCode.DOWN, KeyCodeCombination.SHIFT_DOWN);
+        KeyCombination leftShift = new KeyCodeCombination(KeyCode.LEFT, KeyCodeCombination.SHIFT_DOWN);
+        KeyCombination rightShift = new KeyCodeCombination(KeyCode.RIGHT, KeyCodeCombination.SHIFT_DOWN);
+        if (upShift.match(event)) {
+            hero.moveHeroForward(10);
+        }
+        else if (event.getCode() == KeyCode.UP){
+            hero.moveHeroForward(4);
+        }
+        if (downShift.match(event)) {
+            hero.moveHeroDownward(10);
+        }
+        else if (event.getCode() == KeyCode.DOWN){
+            hero.moveHeroDownward(4);
+        }
+        if (rightShift.match(event)) {
+            hero.moveHeroRight(10);
+        }
+        else if (event.getCode() == KeyCode.RIGHT){
+            hero.moveHeroRight(4);
+        }
+        if (leftShift.match(event)) {
+            hero.moveHeroLeft(10);
+        }
+        if (event.getCode() == KeyCode.LEFT){
+            hero.moveHeroLeft(4);
+        }
     }
 
     private void pause(Stage stage, Group root, ImageView pause) {
