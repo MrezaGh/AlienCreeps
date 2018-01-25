@@ -69,7 +69,6 @@ public class MainScene extends Scene {
 
         //key listener
         EventHandler<KeyEvent> keyListener = event -> {
-            System.out.println("kar mikone");
             if (event.getCode() == KeyCode.UP){
                 hero.moveHeroForward();
             }
