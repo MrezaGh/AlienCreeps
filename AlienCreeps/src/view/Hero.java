@@ -22,7 +22,7 @@ public class Hero {
     public ImageView[] heroMoveRightPics = new ImageView[4];
     public ImageView[] heroMoveForwardPics = new ImageView[4];
     public ImageView[] heroMoveDownwardPics = new ImageView[4];
-
+    private int walkState = 0;
 
     public Hero(Group root) {//todo change variables
         this.energy = 100;
@@ -54,22 +54,45 @@ public class Hero {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        drawHero(heroMoveLeftPics,0);
+        drawHero(heroMoveLeftPics,walkState);
     }
 
-    public void moveHeroForward(){
+    public void moveHeroForward()  {
         this.setCoordinate(new int[]{getCoordinate()[0],getCoordinate()[1]-5});
-        drawHero(heroMoveForwardPics,0);//-------------------------------------------------------------------
+        walkState++;
+        if (walkState == 4)
+            walkState=0;
+        drawHero(heroMoveForwardPics,walkState);
     }
 
     public void drawHero(ImageView[] heroPics, int stateOfWalk) {
+
         try {
             ImageView hero = heroPics[stateOfWalk];
             hero.relocate(getCoordinate()[0],getCoordinate()[1]);
-            root.getChildren().remove(hero);
+            removePreviousHeroPic();
             root.getChildren().add(hero);
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    private void removePreviousHeroPic() {
+        for (ImageView element: heroMoveForwardPics) {
+            if (root.getChildren().contains(element))
+                root.getChildren().remove(element);
+        }
+        for (ImageView element: heroMoveDownwardPics) {
+            if (root.getChildren().contains(element))
+                root.getChildren().remove(element);
+        }
+        for (ImageView element: heroMoveLeftPics) {
+            if (root.getChildren().contains(element))
+                root.getChildren().remove(element);
+        }
+        for (ImageView element: heroMoveRightPics) {
+            if (root.getChildren().contains(element))
+                root.getChildren().remove(element);
         }
     }
 
