@@ -13,13 +13,16 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.input.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import gameLogic.Hero;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,15 +37,6 @@ public class MainScene extends Scene {
     boolean pauseButtonClicked = false;
     private Label clock;
     TimerOfGame timer = new TimerOfGame();
-
-    public Label getClock() {
-        return clock;
-    }
-
-    public void setClock(Label clock) {
-        this.clock = clock;
-    }
-
     public MainScene(Parent root, double width, double height, Paint fill, Stage stage) {
         super(root, width, height, fill);
         makeMainScene(this, stage);
@@ -100,9 +94,30 @@ public class MainScene extends Scene {
     private void makeMainScene(Scene mainScene, Stage stage) {
         Group root = (Group) mainScene.getRoot();
         root.getChildren().clear();
-
-
         //map image
+        buildMapPreview(root);
+
+        //hero
+        Hero hero = new Hero(root);
+
+        //key listener
+        makeKeyListener(hero);
+
+
+        //map buttons :
+
+        //pause button
+        buildPauseButton(stage, root);
+
+
+        //map clock
+
+        buildClock(root);
+    }
+
+
+
+    private void buildMapPreview(Group root) {
         ImageView[] weaponplaces = new ImageView[8];
         try {
             ImageView background = new ImageView(new Image(new FileInputStream(new File("images/map.png/"))));
@@ -130,26 +145,23 @@ public class MainScene extends Scene {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
 
 
-        //hero
-        Hero hero = new Hero(root);
 
 
-        //key listener
+
+    private void makeKeyListener(Hero hero) {
         EventHandler<KeyEvent> keyListener = event -> {
-            if (event.getCode() == KeyCode.UP) {
-                hero.moveHeroForward();
-            }
+            moveHero(hero, event);
+            //todo inja be har dokme e mitune hassas beshe
             event.consume();
         };
-        this.addEventHandler(KeyEvent.KEY_PRESSED, keyListener);
+        this.addEventHandler(KeyEvent.KEY_PRESSED,keyListener);
+    }
 
+    private void buildPauseButton(Stage stage, Group root) {
 
-        //map buttons
-
-
-        //pause button
         try {
             ImageView pause = new ImageView(new Image(new FileInputStream(new File("images/map images/pause.png"))));
             pause.relocate(1240, 8);
@@ -157,10 +169,11 @@ public class MainScene extends Scene {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        //test
 
+    }
 
-        //map clock
+    private void buildClock(Group root) {
+
         clock = new Label(timer.toString());
         clock.relocate(42, 42);
         clock.setStyle("-fx-background-color: \n" +
@@ -179,7 +192,37 @@ public class MainScene extends Scene {
                 "    -fx-padding: 10 20 10 20;" +
                 "-fx-font-weight: bold;");
         root.getChildren().add(clock);
+    }
 
+    private void moveHero(Hero hero, KeyEvent event) {
+        KeyCombination upShift = new KeyCodeCombination(KeyCode.UP, KeyCodeCombination.SHIFT_DOWN);
+        KeyCombination downShift = new KeyCodeCombination(KeyCode.DOWN, KeyCodeCombination.SHIFT_DOWN);
+        KeyCombination leftShift = new KeyCodeCombination(KeyCode.LEFT, KeyCodeCombination.SHIFT_DOWN);
+        KeyCombination rightShift = new KeyCodeCombination(KeyCode.RIGHT, KeyCodeCombination.SHIFT_DOWN);
+        if (upShift.match(event)) {
+            hero.moveHeroForward(10);
+        }
+        else if (event.getCode() == KeyCode.UP){
+            hero.moveHeroForward(4);
+        }
+        if (downShift.match(event)) {
+            hero.moveHeroDownward(10);
+        }
+        else if (event.getCode() == KeyCode.DOWN){
+            hero.moveHeroDownward(4);
+        }
+        if (rightShift.match(event)) {
+            hero.moveHeroRight(10);
+        }
+        else if (event.getCode() == KeyCode.RIGHT){
+            hero.moveHeroRight(4);
+        }
+        if (leftShift.match(event)) {
+            hero.moveHeroLeft(10);
+        }
+        if (event.getCode() == KeyCode.LEFT){
+            hero.moveHeroLeft(4);
+        }
     }
 
     private void pause(Stage stage, Group root, ImageView pause) {
@@ -302,5 +345,12 @@ public class MainScene extends Scene {
 
     public void setPauseButtonClicked(boolean pauseButtonClicked) {
         this.pauseButtonClicked = pauseButtonClicked;
+    }
+    public Label getClock() {
+        return clock;
+    }
+
+    public void setClock(Label clock) {
+        this.clock = clock;
     }
 }
