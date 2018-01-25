@@ -45,7 +45,6 @@ public class Graphic extends Application {
 
             if (counter % 60 == 0) {
                 ((MainScene) stage.getScene()).timer.increaseTimer();
-                System.out.println(((MainScene) stage.getScene()).timer);
                 ((MainScene) stage.getScene()).getClock().setText(((MainScene) stage.getScene()).timer.toString());
             }
         }

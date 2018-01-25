@@ -2,7 +2,7 @@ package gameLogic;
 import gameLogic.firings.*;
 
 public class WeaponPlace {
-    WeaponPlace[] weaponPlaces;
+    WeaponPlace[] weaponPlaces = new WeaponPlace[8];
     private int weaponPlaceNumber;
     private int[] coordinates = new int[2];
     Weapon weapon;
@@ -10,7 +10,7 @@ public class WeaponPlace {
     public WeaponPlace(int weaponPlaceNumber, int[] coordinates) {
         this.weaponPlaceNumber = weaponPlaceNumber;
         this.coordinates = coordinates;
-        WeaponPlace[] allWeaponPlaces = new WeaponPlace[8];
+        WeaponPlace[] allWeaponPlaces;
 
     }
 
