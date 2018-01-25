@@ -26,15 +26,6 @@ public class MainScene extends Scene {
     boolean pauseButtonClicked = false;
     private Label clock;
     TimerOfGame timer = new TimerOfGame();
-
-    public Label getClock() {
-        return clock;
-    }
-
-    public void setClock(Label clock) {
-        this.clock = clock;
-    }
-
     public MainScene(Parent root, double width, double height, Paint fill, Stage stage) {
         super(root, width, height, fill);
         makeMainScene(this,stage);
@@ -44,11 +35,29 @@ public class MainScene extends Scene {
         Group root = (Group) mainScene.getRoot();
         root.getChildren().clear();
 
-
-
-
-
         //map image
+        buildMapPreview(root);
+
+        //hero
+        Hero hero = new Hero(root);
+
+        //key listener
+        makeKeyListener(hero);
+
+        //map buttons :
+
+        //pause button
+        buildPauseButton(stage, root);
+
+
+        //map clock
+
+        buildClock(root);
+    }
+
+
+
+    private void buildMapPreview(Group root) {
         ImageView[] weaponplaces = new ImageView[8];
         try {
             ImageView background = new ImageView(new Image(new FileInputStream(new File("images/map.png/"))));
@@ -75,28 +84,18 @@ public class MainScene extends Scene {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
 
-
-        //hero
-        Hero hero = new Hero(root);
-
-
-
-        //key listener
-
+    private void makeKeyListener(Hero hero) {
         EventHandler<KeyEvent> keyListener = event -> {
             moveHero(hero, event);
-
+            //todo inja be har dokme e mitune hassas beshe
             event.consume();
         };
         this.addEventHandler(KeyEvent.KEY_PRESSED,keyListener);
+    }
 
-
-        //map buttons
-
-
-
-        //pause button
+    private void buildPauseButton(Stage stage, Group root) {
         try {
             ImageView pause = new ImageView(new Image(new FileInputStream(new File("images/map images/pause.png"))));
             pause.relocate(1240,8);
@@ -104,12 +103,10 @@ public class MainScene extends Scene {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        //test
+    }
 
+    private void buildClock(Group root) {
 
-
-
-        //map clock
         clock = new Label(timer.toString());
         clock.relocate(42,42);
         clock.setStyle("-fx-background-color: \n" +
@@ -128,7 +125,6 @@ public class MainScene extends Scene {
                 "    -fx-padding: 10 20 10 20;"+
                 "-fx-font-weight: bold;");
         root.getChildren().add(clock);
-
     }
 
     private void moveHero(Hero hero, KeyEvent event) {
@@ -283,5 +279,12 @@ public class MainScene extends Scene {
 
     public void setPauseButtonClicked(boolean pauseButtonClicked) {
         this.pauseButtonClicked = pauseButtonClicked;
+    }
+    public Label getClock() {
+        return clock;
+    }
+
+    public void setClock(Label clock) {
+        this.clock = clock;
     }
 }
