@@ -69,7 +69,6 @@ public class Graphic extends Application {
         stage.show();
         Timer clock = new Timer();
         animationTimer.start();
-        //clock.start();
     }
 
 

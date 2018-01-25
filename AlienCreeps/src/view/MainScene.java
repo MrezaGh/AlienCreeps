@@ -4,12 +4,15 @@ import controller.Timer;
 import controller.TimerOfGame;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -51,15 +54,28 @@ public class MainScene extends Scene {
         //map image
         try {
             ImageView background = new ImageView(new Image(new FileInputStream(new File("images/map.png/"))));
+            //ImageView weapon
             root.getChildren().add(background);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
 
+        //hero
+        Hero hero = new Hero(root);
 
-        //map clock
-        //Timer.activeCount();
+
+
+
+        //key listener
+        EventHandler<KeyEvent> keyListener = event -> {
+            System.out.println("kar mikone");
+            if (event.getCode() == KeyCode.UP){
+                hero.moveHeroForward();
+            }
+            event.consume();
+        };
+        this.addEventHandler(KeyEvent.KEY_PRESSED,keyListener);
 
 
         //map buttons
@@ -75,15 +91,11 @@ public class MainScene extends Scene {
             e.printStackTrace();
         }
         //test
-        try {
-            ImageView pause = new ImageView(new Image(new FileInputStream(new File("images/hero images/MoveForward1.png"))));
-            pause.relocate(1056,872);
-            pause(stage, root, pause);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
 
+
+
+        //map clock
         clock = new Label(timer.toString());
         clock.relocate(42,42);
         clock.setStyle("-fx-background-color: \n" +
