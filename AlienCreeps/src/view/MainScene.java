@@ -1,17 +1,22 @@
 package view;
 
+import controller.ControllerClass;
 import controller.TimerOfGame;
+import gameLogic.WeaponPlace;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -19,6 +24,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainScene extends Scene {
 
@@ -38,15 +45,61 @@ public class MainScene extends Scene {
 
     public MainScene(Parent root, double width, double height, Paint fill, Stage stage) {
         super(root, width, height, fill);
-        makeMainScene(this,stage);
+        makeMainScene(this, stage);
+    }
+
+    private void makeEventHandlerForWeaponButtons(ArrayList<Button> buttons, int numOfWeaponPlace, Stage stage) {
+        System.out.println("che margete");
+
+        for (Button button : buttons) {
+            System.out.println("taheshe");
+            button.setOnMouseClicked(event -> {
+                new ControllerClass().setWeapon(numOfWeaponPlace, button.getText());
+                stage.close();
+            });
+        }
+    }
+
+    private void makeAllWeapnPlaceEventHandlers(ImageView[] weaponPlaces) {
+        for (int i = 0; i < weaponPlaces.length; i++) {
+            int finalI = i;
+            weaponPlaces[i].setOnMouseClicked(event -> {
+                System.out.println("bezar");
+                TextArea textArea = new TextArea();
+                Stage stage = new Stage();
+                stage.setTitle("Enter The Weapon You Want To Put Here");
+                textArea.setMaxWidth(100);
+                textArea.setMaxHeight(100);
+                Button antiAircraftButton = new Button("AntiAircraft");
+                Button freezerButton = new Button("Freezer");
+
+                Button laserButton = new Button("Laser");
+                Button machineGunButton = new Button("MachineGun");
+                Button rocketButton = new Button("Rocket");
+                Button quitButton = new Button("Quit");
+                quitButton.setOnMouseClicked(event1 -> {
+                    stage.close();
+                });
+                VBox vBox = new VBox();
+
+                ArrayList<Button> buttons = new ArrayList<>();
+                buttons.addAll(Arrays.asList(antiAircraftButton, freezerButton, laserButton, machineGunButton, rocketButton));
+                makeEventHandlerForWeaponButtons(buttons, finalI, stage);
+
+                vBox.getChildren().addAll(buttons);
+                vBox.getChildren().add(quitButton);
+                Scene scene = new Scene(new Group(), 500, 500, Color.GRAY);
+                stage.setScene(scene);
+                Group root = (Group) scene.getRoot();
+                root.getChildren().addAll(vBox);
+                stage.show();
+            });
+        }
     }
 
     private void makeMainScene(Scene mainScene, Stage stage) {
         Group root = (Group) mainScene.getRoot();
         root.getChildren().clear();
-
-
-
 
 
         //map image
@@ -62,17 +115,18 @@ public class MainScene extends Scene {
             weaponplaces[5] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
             weaponplaces[6] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
             weaponplaces[7] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
-            weaponplaces[7].relocate(192,544);
-            weaponplaces[6].relocate(384,320);
-            weaponplaces[5].relocate(608,320);
-            weaponplaces[4].relocate(896,320);
-            weaponplaces[3].relocate(800,544);
-            weaponplaces[2].relocate(800,736);
-            weaponplaces[1].relocate(1056,736);
-            weaponplaces[0].relocate(352,64);
+            weaponplaces[7].relocate(192, 544);
+            weaponplaces[6].relocate(384, 320);
+            weaponplaces[5].relocate(608, 320);
+            weaponplaces[4].relocate(896, 320);
+            weaponplaces[3].relocate(800, 544);
+            weaponplaces[2].relocate(800, 736);
+            weaponplaces[1].relocate(1056, 736);
+            weaponplaces[0].relocate(352, 64);
+            makeAllWeapnPlaceEventHandlers(weaponplaces);
 
             root.getChildren().add(background);
-            root.getChildren().addAll(weaponplaces[0],weaponplaces[1],weaponplaces[2],weaponplaces[3],weaponplaces[4],weaponplaces[5],weaponplaces[6],weaponplaces[7]);
+            root.getChildren().addAll(weaponplaces[0], weaponplaces[1], weaponplaces[2], weaponplaces[3], weaponplaces[4], weaponplaces[5], weaponplaces[6], weaponplaces[7]);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -82,26 +136,23 @@ public class MainScene extends Scene {
         Hero hero = new Hero(root);
 
 
-
-
         //key listener
         EventHandler<KeyEvent> keyListener = event -> {
-            if (event.getCode() == KeyCode.UP){
+            if (event.getCode() == KeyCode.UP) {
                 hero.moveHeroForward();
             }
             event.consume();
         };
-        this.addEventHandler(KeyEvent.KEY_PRESSED,keyListener);
+        this.addEventHandler(KeyEvent.KEY_PRESSED, keyListener);
 
 
         //map buttons
 
 
-
         //pause button
         try {
             ImageView pause = new ImageView(new Image(new FileInputStream(new File("images/map images/pause.png"))));
-            pause.relocate(1240,8);
+            pause.relocate(1240, 8);
             pause(stage, root, pause);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -109,11 +160,9 @@ public class MainScene extends Scene {
         //test
 
 
-
-
         //map clock
         clock = new Label(timer.toString());
-        clock.relocate(42,42);
+        clock.relocate(42, 42);
         clock.setStyle("-fx-background-color: \n" +
                 "        #a6b5c9,\n" +
                 "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
@@ -127,7 +176,7 @@ public class MainScene extends Scene {
                 "    -fx-font-family: \"Arial\";\n" +
                 "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
                 "    -fx-font-size: 12px;\n" +
-                "    -fx-padding: 10 20 10 20;"+
+                "    -fx-padding: 10 20 10 20;" +
                 "-fx-font-weight: bold;");
         root.getChildren().add(clock);
 
@@ -147,28 +196,27 @@ public class MainScene extends Scene {
         return (MouseEvent e) -> {
 
 
-                   if (!getPauseButtonClicked() ) {
-                       //todo injaa zaman bayad pause she ya hame chi sleep she
-                       if (!getPauseState())
-                       setPauseState(true);
-                       //resume button
-                       resumeButton[0] = resumeButton(root);
-                       //quit button
-                       quitButton[0] = quitButton(stage, root);
-                       //show stat button
-                       showStatButton[0] = showStatButton(root);
+            if (!getPauseButtonClicked()) {
+                //todo injaa zaman bayad pause she ya hame chi sleep she
+                if (!getPauseState())
+                    setPauseState(true);
+                //resume button
+                resumeButton[0] = resumeButton(root);
+                //quit button
+                quitButton[0] = quitButton(stage, root);
+                //show stat button
+                showStatButton[0] = showStatButton(root);
 
 
-                       pause.relocate(1240, 8);
-                       setPauseButtonClicked(true);
-                   }
-                   else if (getPauseButtonClicked() ) {
-                           root.getChildren().remove(resumeButton[0]);
-                           root.getChildren().remove(showStatButton[0]);
-                           root.getChildren().remove(quitButton[0]);
-                           setPauseButtonClicked(false);
+                pause.relocate(1240, 8);
+                setPauseButtonClicked(true);
+            } else if (getPauseButtonClicked()) {
+                root.getChildren().remove(resumeButton[0]);
+                root.getChildren().remove(showStatButton[0]);
+                root.getChildren().remove(quitButton[0]);
+                setPauseButtonClicked(false);
 
-                   }
+            }
 
         };
     }
@@ -177,18 +225,18 @@ public class MainScene extends Scene {
     private ImageView showStatButton(Group root) {
         try {
             ImageView showStat = new ImageView(new Image(new FileInputStream(new File("images/map images/showstat.png"))));
-            showStat.relocate(1160,42);
+            showStat.relocate(1160, 42);
 
             showStat.setOnMouseClicked(e1 ->
-                    {
-                        //todo inja text box show stat baz mishe
-                        TextField showStatTextField = new TextField("showing stats");
-                        showStatTextField.relocate(550, 300);
-                        showStatTextField.setOnMouseClicked(e2 -> root.getChildren().remove(showStatTextField));
-                        root.getChildren().add(showStatTextField);
+            {
+                //todo inja text box show stat baz mishe
+                TextField showStatTextField = new TextField("showing stats");
+                showStatTextField.relocate(550, 300);
+                showStatTextField.setOnMouseClicked(e2 -> root.getChildren().remove(showStatTextField));
+                root.getChildren().add(showStatTextField);
 
 
-                    });
+            });
 
 
             root.getChildren().add(showStat);
@@ -202,9 +250,9 @@ public class MainScene extends Scene {
     private ImageView quitButton(Stage stage, Group root) {
         try {
             ImageView quit = new ImageView(new Image(new FileInputStream(new File("images/map images/quit.png"))));
-            quit.relocate(1240,42);
+            quit.relocate(1240, 42);
             quit.setOnMouseClicked(e1 -> {
-                StartScene startScene = new StartScene(new Group(), 1280, 960, Color.BLUE,stage);
+                StartScene startScene = new StartScene(new Group(), 1280, 960, Color.BLUE, stage);
                 stage.setScene(startScene);
             });
             root.getChildren().add(quit);
@@ -218,7 +266,7 @@ public class MainScene extends Scene {
     private ImageView resumeButton(Group root) {
         try {
             ImageView resume = new ImageView(new Image(new FileInputStream(new File("images/map images/play.png"))));
-            resume.relocate(1200,42);
+            resume.relocate(1200, 42);
 
             resume.setOnMouseClicked(e1 -> {
                 //todo inja zaman dobare resume mishe
@@ -229,7 +277,6 @@ public class MainScene extends Scene {
 
                 setPauseState(false);
             });
-
 
 
             root.getChildren().add(resume);
@@ -248,6 +295,7 @@ public class MainScene extends Scene {
     public void setPauseState(boolean pauseState) {
         this.pauseState = pauseState;
     }
+
     public boolean getPauseButtonClicked() {
         return pauseButtonClicked;
     }

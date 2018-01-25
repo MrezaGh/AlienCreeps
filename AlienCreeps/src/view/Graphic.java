@@ -23,7 +23,6 @@ public class Graphic extends Application {
     public static void main(String[] args) {
         launch(args);
         ControllerClass controller = new ControllerClass();
-        controller.run();
     }
 
     AnimationTimer animationTimer = new AnimationTimer() {
