@@ -50,29 +50,29 @@ public class MainScene extends Scene {
 
 
         //map image
-        ImageView[] weapon = new ImageView[8];
+        ImageView[] weaponplaces = new ImageView[8];
         try {
             ImageView background = new ImageView(new Image(new FileInputStream(new File("images/map.png/"))));
-            weapon[0] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weaponplaces[0] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
 
-            weapon[1] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
-            weapon[2] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
-            weapon[3] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
-            weapon[4] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
-            weapon[5] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
-            weapon[6] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
-            weapon[7] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
-            weapon[7].relocate(192,544);
-            weapon[6].relocate(384,320);
-            weapon[5].relocate(608,320);
-            weapon[4].relocate(896,320);
-            weapon[3].relocate(800,544);
-            weapon[2].relocate(800,736);
-            weapon[1].relocate(1056,736);
-            weapon[0].relocate(352,64);
+            weaponplaces[1] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weaponplaces[2] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weaponplaces[3] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weaponplaces[4] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weaponplaces[5] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weaponplaces[6] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weaponplaces[7] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            weaponplaces[7].relocate(192,544);
+            weaponplaces[6].relocate(384,320);
+            weaponplaces[5].relocate(608,320);
+            weaponplaces[4].relocate(896,320);
+            weaponplaces[3].relocate(800,544);
+            weaponplaces[2].relocate(800,736);
+            weaponplaces[1].relocate(1056,736);
+            weaponplaces[0].relocate(352,64);
 
             root.getChildren().add(background);
-            root.getChildren().addAll(weapon[0],weapon[1],weapon[2],weapon[3],weapon[4],weapon[5],weapon[6],weapon[7]);
+            root.getChildren().addAll(weaponplaces[0],weaponplaces[1],weaponplaces[2],weaponplaces[3],weaponplaces[4],weaponplaces[5],weaponplaces[6],weaponplaces[7]);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

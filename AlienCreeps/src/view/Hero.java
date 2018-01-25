@@ -54,6 +54,7 @@ public class Hero {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        drawHero(heroMoveLeftPics,0);
     }
 
     public void moveHeroForward(){
