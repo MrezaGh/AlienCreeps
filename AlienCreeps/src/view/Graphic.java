@@ -32,6 +32,9 @@ public class Graphic extends Application {
 
         @Override
         public void handle(long now) {
+            if (stage.getScene() instanceof StartScene){
+                return;
+            }
             if (isMainSceneOrNot == false) {
                 return;
             }

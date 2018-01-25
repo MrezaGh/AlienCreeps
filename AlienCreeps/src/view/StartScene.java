@@ -471,7 +471,6 @@ public class StartScene extends Scene {
                     "-fx-font-weight: bold;");
         });
 
-
         try {
             Image image = new Image(new FileInputStream(new File("images\\quitCursor.png")));
             quitButton.setCursor(new ImageCursor(image,image.getWidth()/2,image.getHeight()/2));

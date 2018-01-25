@@ -212,6 +212,7 @@ public class MainScene extends Scene {
 
         return null;
     }
+
     public boolean getPauseState() {
         return pauseState;
     }
