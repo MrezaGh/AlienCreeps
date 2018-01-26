@@ -37,28 +37,30 @@ public class MainScene extends Scene {
     boolean pauseButtonClicked = false;
     private Label clock;
     TimerOfGame timer = new TimerOfGame();
+
     public MainScene(Parent root, double width, double height, Paint fill, Stage stage) {
         super(root, width, height, fill);
         makeMainScene(this, stage);
     }
 
     private void makeEventHandlerForWeaponButtons(ArrayList<Button> buttons, int numOfWeaponPlace, Stage stage) {
-        System.out.println("che margete");
-
         for (Button button : buttons) {
-            System.out.println("taheshe");
             button.setOnMouseClicked(event -> {
                 new ControllerClass().setWeapon(numOfWeaponPlace, button.getText());
+                ImageView imageOfWeapon = WeaponPlace.getWeaponPlaces()[numOfWeaponPlace].getWeapon().getImageView();
+                Group root = (Group) this.getRoot();
+                imageOfWeapon.relocate(WeaponPlace.getWeaponPlaces()[numOfWeaponPlace].getCoordinates()[0], WeaponPlace.getWeaponPlaces()[numOfWeaponPlace].getCoordinates()[1]);
+                root.getChildren().add(imageOfWeapon);
                 stage.close();
             });
         }
     }
 
+
     private void makeAllWeapnPlaceEventHandlers(ImageView[] weaponPlaces) {
         for (int i = 0; i < weaponPlaces.length; i++) {
             int finalI = i;
             weaponPlaces[i].setOnMouseClicked(event -> {
-                System.out.println("bezar");
                 TextArea textArea = new TextArea();
                 Stage stage = new Stage();
                 stage.setTitle("Enter The Weapon You Want To Put Here");
@@ -116,7 +118,6 @@ public class MainScene extends Scene {
     }
 
 
-
     private void buildMapPreview(Group root) {
         ImageView[] weaponplaces = new ImageView[8];
         try {
@@ -148,16 +149,13 @@ public class MainScene extends Scene {
     }
 
 
-
-
-
     private void makeKeyListener(Hero hero) {
         EventHandler<KeyEvent> keyListener = event -> {
             moveHero(hero, event);
             //todo inja be har dokme e mitune hassas beshe
             event.consume();
         };
-        this.addEventHandler(KeyEvent.KEY_PRESSED,keyListener);
+        this.addEventHandler(KeyEvent.KEY_PRESSED, keyListener);
     }
 
     private void buildPauseButton(Stage stage, Group root) {
@@ -201,26 +199,23 @@ public class MainScene extends Scene {
         KeyCombination rightShift = new KeyCodeCombination(KeyCode.RIGHT, KeyCodeCombination.SHIFT_DOWN);
         if (upShift.match(event)) {
             hero.moveHeroForward(10);
-        }
-        else if (event.getCode() == KeyCode.UP){
+        } else if (event.getCode() == KeyCode.UP) {
             hero.moveHeroForward(4);
         }
         if (downShift.match(event)) {
             hero.moveHeroDownward(10);
-        }
-        else if (event.getCode() == KeyCode.DOWN){
+        } else if (event.getCode() == KeyCode.DOWN) {
             hero.moveHeroDownward(4);
         }
         if (rightShift.match(event)) {
             hero.moveHeroRight(10);
-        }
-        else if (event.getCode() == KeyCode.RIGHT){
+        } else if (event.getCode() == KeyCode.RIGHT) {
             hero.moveHeroRight(4);
         }
         if (leftShift.match(event)) {
             hero.moveHeroLeft(10);
         }
-        if (event.getCode() == KeyCode.LEFT){
+        if (event.getCode() == KeyCode.LEFT) {
             hero.moveHeroLeft(4);
         }
     }
@@ -346,6 +341,7 @@ public class MainScene extends Scene {
     public void setPauseButtonClicked(boolean pauseButtonClicked) {
         this.pauseButtonClicked = pauseButtonClicked;
     }
+
     public Label getClock() {
         return clock;
     }

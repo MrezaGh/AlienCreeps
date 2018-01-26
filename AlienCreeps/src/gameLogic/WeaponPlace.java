@@ -37,7 +37,6 @@ public class WeaponPlace {
 
     public void setWeapon(String name) {
         this.weapon = Weapon.valueOf(name);
-        System.out.println("gozashtam");
     }
 
     public int getWeaponPlaceNumber() {
