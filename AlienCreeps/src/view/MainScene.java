@@ -3,6 +3,7 @@ package view;
 import controller.ControllerClass;
 import controller.TimerOfGame;
 import gameLogic.WeaponPlace;
+import gameLogic.firings.Weapon;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -51,6 +52,11 @@ public class MainScene extends Scene {
                 Group root = (Group) this.getRoot();
                 imageOfWeapon.relocate(WeaponPlace.getWeaponPlaces()[numOfWeaponPlace].getCoordinates()[0], WeaponPlace.getWeaponPlaces()[numOfWeaponPlace].getCoordinates()[1]);
                 root.getChildren().add(imageOfWeapon);
+                for (Weapon weapon : Weapon.values()) {
+                    if (weapon.name().equals(button.getText())) {
+
+                    }
+                }
                 stage.close();
             });
         }
@@ -91,6 +97,13 @@ public class MainScene extends Scene {
                 stage.show();
             });
         }
+    }
+
+    private void makeWeaponImageSets(Group root) {
+
+
+
+
     }
 
     private void makeMainScene(Scene mainScene, Stage stage) {

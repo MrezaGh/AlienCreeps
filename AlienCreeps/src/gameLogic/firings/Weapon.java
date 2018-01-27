@@ -4,17 +4,15 @@ import controller.TimerOfGame;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public enum Weapon implements Firings {
-    AntiAircraft(0, 12, 30, 15, 20, 180, 1, false, "images/Graphic_sprites/laser.png"),
-    Freezer(5, 3, 20, 5, 60, 170, 1, true, "images/Graphic_sprites/laser.png"),
-    Laser(10, 7, 20, 7, 40, 150, 1, false, "images/Graphic_sprites/laser.png"),
-    MachineGun(10, 5, 20, 10, 0, 100, 1, false, "images/Graphic_sprites/heavy gun/orange defense turret 02.png"),
-    Rocket(20, 10, 40, 3, 0, 180, 1, true, "images/Graphic_sprites/rocket.png");
+    AntiAircraft(0, 12, 30, 15, 20, 180, 1, false),
+    Freezer(5, 3, 20, 5, 60, 170, 1, true),
+    Laser(10, 7, 20, 7, 40, 150, 1, false),
+    MachineGun(10, 5, 20, 10, 0, 100, 1, false),
+    Rocket(20, 10, 40, 3, 0, 180, 1, true);
 
     private int[] coordinate;
     private int powerOnGroundUnits;
@@ -36,7 +34,7 @@ public enum Weapon implements Firings {
 
     public int price;
 
-    Weapon(int powerOnGroundUnits, int powerOnAirUnits, double range, int fireRate, int speedReduction, int price, int level, boolean isPogromist, String path)  {
+    Weapon(int powerOnGroundUnits, int powerOnAirUnits, double range, int fireRate, int speedReduction, int price, int level, boolean isPogromist)  {
         setPrice(price);
         setPowerOnGroundUnits(powerOnGroundUnits);
         setPowerOnAirUnits(powerOnAirUnits);
@@ -45,11 +43,6 @@ public enum Weapon implements Firings {
         setSpeedReduction(speedReduction);
         setLevel(level);
         setPogromist(isPogromist);
-        try {
-            this.imageView = new ImageView(new Image(new FileInputStream(path)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
