@@ -3,7 +3,6 @@ package view;
 import controller.ControllerClass;
 import controller.TimerOfGame;
 import gameLogic.Hero;
-import gameLogic.WeaponPlace;
 import gameLogic.firings.Weapon;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -67,7 +66,7 @@ public class MainScene extends Scene {
                         weaponPlaces[numOfWeaponPlace].setImage(machinGunImageViews.getMachinGunImageSet()[0].getImage());
                         break;
                     case AntiAircraft:
-                        weaponPlaces[numOfWeaponPlace].setImage(antiAircraftImageViews.getAntiAircraftImageSet()[0].getImage());
+                        weaponPlaces[numOfWeaponPlace].setImage(antiAircraftImageViews.getNonFiringImages()[0].getImage());
                         break;
                 }
                 stage.close();

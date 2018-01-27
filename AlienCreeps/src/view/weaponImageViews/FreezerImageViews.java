@@ -6,23 +6,35 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class FreezerImageViews {
-    private ImageView[] freezerImageSet = new ImageView[4];
+public class FreezerImageViews extends WeaponImages{
+
 
     public FreezerImageViews() {
-        makeFreezerImageSet();
+        super(2);
     }
 
     public void makeFreezerImageSet() {
+
+    }
+
+
+    @Override
+    protected void makeFiringImages() {
         try {
-            freezerImageSet[0] = new ImageView(new Image(new FileInputStream("images/Freezer/Freezer0.png")));
-            freezerImageSet[1] = new ImageView(new Image(new FileInputStream("images/Freezer/Freezer1.png")));
+            nonFiringImages[0] = new Image(new FileInputStream("images/Freezer/Freezer0.png"));
+            nonFiringImages[1] = new Image(new FileInputStream("images/Freezer/Freezer1.png"));
         } catch (FileNotFoundException e) {
             System.out.println("fail loading freezer images");
         }
     }
 
-    public ImageView[] getFreezerImageSetImageSet() {
-        return freezerImageSet;
+    @Override
+    protected void makeNonFiringImages() {
+        try {
+            firingImages[0] = new Image(new FileInputStream("images/Freezer/Freezer0Firing.png"));
+            firingImages[1] = new Image(new FileInputStream("images/Freezer/Freezer0Firing.png"));
+        } catch (FileNotFoundException e) {
+            System.out.println("fail loading firing freezer images");
+        }
     }
 }
