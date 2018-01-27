@@ -2,6 +2,7 @@ package view;
 
 import controller.ControllerClass;
 import controller.TimerOfGame;
+import gameLogic.Hero;
 import gameLogic.WeaponPlace;
 import gameLogic.firings.Weapon;
 import javafx.event.EventHandler;
@@ -14,16 +15,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.scene.input.*;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import gameLogic.Hero;
+import view.weaponImageViews.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,24 +35,40 @@ public class MainScene extends Scene {
     boolean pauseButtonClicked = false;
     private Label clock;
     TimerOfGame timer = new TimerOfGame();
+    LaserImageViews laserImageViews = new LaserImageViews();
+    RocketImageViews rocketImageViews = new RocketImageViews();
+    TeslaImageViews teslaImageViews = new TeslaImageViews();
+    FreezerImageViews freezerImageViews = new FreezerImageViews();
+    MachinGunImageViews machinGunImageViews = new MachinGunImageViews();
+    AntiAircraftImageViews antiAircraftImageViews = new AntiAircraftImageViews();
 
     public MainScene(Parent root, double width, double height, Paint fill, Stage stage) {
         super(root, width, height, fill);
         makeMainScene(this, stage);
     }
 
-    private void makeEventHandlerForWeaponButtons(ArrayList<Button> buttons, int numOfWeaponPlace, Stage stage) {
+    private void makeEventHandlerForWeaponButtons(ArrayList<Button> buttons, int numOfWeaponPlace, Stage stage, ImageView[] weaponPlaces) {
         for (Button button : buttons) {
             button.setOnMouseClicked(event -> {
                 new ControllerClass().setWeapon(numOfWeaponPlace, button.getText());
-                ImageView imageOfWeapon = WeaponPlace.getWeaponPlaces()[numOfWeaponPlace].getWeapon().getImageView();
                 Group root = (Group) this.getRoot();
-                imageOfWeapon.relocate(WeaponPlace.getWeaponPlaces()[numOfWeaponPlace].getCoordinates()[0], WeaponPlace.getWeaponPlaces()[numOfWeaponPlace].getCoordinates()[1]);
-                root.getChildren().add(imageOfWeapon);
-                for (Weapon weapon : Weapon.values()) {
-                    if (weapon.name().equals(button.getText())) {
-
-                    }
+                Weapon weapon = Weapon.valueOf(button.getText());
+                switch (weapon) {
+                    case Laser:
+                        weaponPlaces[numOfWeaponPlace].setImage(laserImageViews.getLaserImageViews()[0].getImage());
+                        break;
+                    case Rocket:
+                        weaponPlaces[numOfWeaponPlace].setImage(rocketImageViews.getRocketImageSet()[0].getImage());
+                        break;
+                    case Freezer:
+                        weaponPlaces[numOfWeaponPlace].setImage(freezerImageViews.getFreezerImageSetImageSet()[0].getImage());
+                        break;
+                    case MachineGun:
+                        weaponPlaces[numOfWeaponPlace].setImage(machinGunImageViews.getMachinGunImageSet()[0].getImage());
+                        break;
+                    case AntiAircraft:
+                        weaponPlaces[numOfWeaponPlace].setImage(antiAircraftImageViews.getAntiAircraftImageSet()[0].getImage());
+                        break;
                 }
                 stage.close();
             });
@@ -86,7 +99,7 @@ public class MainScene extends Scene {
 
                 ArrayList<Button> buttons = new ArrayList<>();
                 buttons.addAll(Arrays.asList(antiAircraftButton, freezerButton, laserButton, machineGunButton, rocketButton));
-                makeEventHandlerForWeaponButtons(buttons, finalI, stage);
+                makeEventHandlerForWeaponButtons(buttons, finalI, stage, weaponPlaces);
 
                 vBox.getChildren().addAll(buttons);
                 vBox.getChildren().add(quitButton);
@@ -99,12 +112,6 @@ public class MainScene extends Scene {
         }
     }
 
-    private void makeWeaponImageSets(Group root) {
-
-
-
-
-    }
 
     private void makeMainScene(Scene mainScene, Stage stage) {
         Group root = (Group) mainScene.getRoot();

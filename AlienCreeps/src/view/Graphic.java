@@ -39,6 +39,7 @@ public class Graphic extends Application {
             if(((MainScene) stage.getScene()).getPauseState() == true){
                 return;
             }
+
             counter++;
 
             if (counter % 60 == 0) {

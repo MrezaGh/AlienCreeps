@@ -10,12 +10,11 @@ public class RocketImageViews {
     ImageView[] rocketImageSet = new ImageView[11];
 
     public RocketImageViews() {
-        this.rocketImageSet = makeRocketImageSet();
+        makeRocketImageSet();
     }
 
-    public ImageView[] makeRocketImageSet() {
+    public void makeRocketImageSet() {
         try {
-            ImageView[] rocketImageSet = new ImageView[11];
             rocketImageSet[0] = new ImageView(new Image(new FileInputStream("images/Rocket/rocket0.png")));
             rocketImageSet[1] = new ImageView(new Image(new FileInputStream("images/Rocket/rocket1.png")));
             rocketImageSet[2] = new ImageView(new Image(new FileInputStream("images/Rocket/rocket2.png")));
@@ -30,7 +29,6 @@ public class RocketImageViews {
         } catch (FileNotFoundException e) {
             System.out.println("fail loading rocket images");
         }
-        return rocketImageSet;
     }
 
     public ImageView[] getRocketImageSet() {
