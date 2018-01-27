@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 public class FreezerImageViews {
     private ImageView[] freezerImageSet = new ImageView[4];
 
-    public FreezerImageViews(ImageView[] rocketImageSet) {
+    public FreezerImageViews() {
         makeFreezerImageSet();
     }
 
@@ -22,7 +22,7 @@ public class FreezerImageViews {
         }
     }
 
-    public ImageView[] getRocketImageSet() {
+    public ImageView[] getFreezerImageSetImageSet() {
         return freezerImageSet;
     }
 }

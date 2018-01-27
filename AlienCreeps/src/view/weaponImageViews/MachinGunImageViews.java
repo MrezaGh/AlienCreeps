@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 public class MachinGunImageViews {
     private ImageView[] machinGunImageSet = new ImageView[4];
 
-    public MachinGunImageViews(ImageView[] machinGunImageSet) {
+    public MachinGunImageViews() {
         makeMachinGunImageSet();
     }
 

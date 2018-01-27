@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 public class RocketImageViews {
     ImageView[] rocketImageSet = new ImageView[11];
 
-    public RocketImageViews(ImageView[] rocketImageSet) {
+    public RocketImageViews() {
         this.rocketImageSet = makeRocketImageSet();
     }
 
