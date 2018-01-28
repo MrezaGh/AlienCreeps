@@ -2,9 +2,12 @@ package view;
 
 import controller.ControllerClass;
 import controller.TimerOfGame;
+import gameLogic.Engine;
 import gameLogic.Hero;
+import gameLogic.WeaponPlace;
 import gameLogic.firings.Tesla;
 import gameLogic.firings.Weapon;
+import gameLogic.map.Test;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -18,16 +21,14 @@ import javafx.scene.input.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sun.reflect.MethodAccessor;
 import view.weaponImageViews.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.lang.invoke.MethodHandle;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -44,6 +45,7 @@ public class MainScene extends Scene {
     FreezerImages freezerImages = new FreezerImages();
     MachinGunImages machinGunImages = new MachinGunImages();
     AntiAircraftImages antiAircraftImages = new AntiAircraftImages();
+    Label goldLabel = new Label("Gold : " + Engine.getInstance().getPlayer().getGold());
 
     public MainScene(Parent root, double width, double height, Paint fill, Stage stage) {
         super(root, width, height, fill);
@@ -51,9 +53,37 @@ public class MainScene extends Scene {
     }
 
     private void makeEventHandlerForWeaponButtons(ArrayList<Button> buttons, int numOfWeaponPlace, Stage stage, ImageView[] weaponPlaces) {
+        //TODO remove
+        Test.testPath();
         for (Button button : buttons) {
             button.setOnMouseClicked(event -> {
-                new ControllerClass().setWeapon(numOfWeaponPlace, button.getText());
+                try {
+                    new ControllerClass().setWeapon(numOfWeaponPlace, button.getText());
+                } catch (Exception e) {
+                    Stage warningStage = new Stage();
+                    Scene warningScene = new Scene(new Group(), 300, 300);
+                    warningStage.setMaxWidth(300);
+                    warningStage.setMaxHeight(300);
+                    warningStage.setMinWidth(300);
+                    warningStage.setMinHeight(300);
+                    Button okButton = new Button("OK");
+                    okButton.relocate(150, 150);
+                    okButton.setOnMouseClicked(event1 -> {
+                        warningStage.close();
+                    });
+                    warningScene.setFill(Color.BLACK);
+                    Label label = new Label(e.getMessage());
+                    Font nazanin = new Font("B Nazanin", 20);
+                    label.setFont(nazanin);
+                    label.relocate(10, 10);
+                    label.setTextFill(Color.RED);
+                    Group root = (Group) warningScene.getRoot();
+                    root.getChildren().addAll(label, okButton);
+                    warningStage.setScene(warningScene);
+                    warningStage.show();
+                    return;
+                }
+
                 Group root = (Group) this.getRoot();
 
                 Weapon weapon = Weapon.valueOf(button.getText());
@@ -91,7 +121,13 @@ public class MainScene extends Scene {
                 Button laserButton = new Button("Laser");
                 Button machineGunButton = new Button("MachineGun");
                 Button rocketButton = new Button("Rocket");
+                Button upgradeButton = new Button("Upgrade");
 
+                upgradeButton.setOnMouseClicked(event1 -> {
+                    if (WeaponPlace.getWeaponPlaces()[finalI].getWeapon() != null) {
+                        //TODO upgrade
+                    }
+                });
                 Button quitButton = new Button("Quit");
                 quitButton.setOnMouseClicked(event1 -> {
                     stage.close();
@@ -104,6 +140,7 @@ public class MainScene extends Scene {
                 makeEventHandlerForWeaponButtons(buttons, finalI, stage, weaponPlaces);
 
                 vBox.getChildren().addAll(buttons);
+                vBox.getChildren().add(upgradeButton);
                 vBox.getChildren().add(quitButton);
                 Scene scene = new Scene(new Group(), 500, 500, Color.GRAY);
                 stage.setScene(scene);
@@ -118,7 +155,7 @@ public class MainScene extends Scene {
         Text text2 = new Text();
         text2.setText("0");
         teslaImage.setOnMouseClicked(event -> {
-            if (text2.getText().equals("1")){
+            if (text2.getText().equals("1")) {
                 return;
             }
             Stage stage = new Stage();
@@ -138,14 +175,14 @@ public class MainScene extends Scene {
             Button yesButton = new Button("Yes");
             yesButton.relocate(10, 100);
             stage.show();
-            makeEventHandlerForYesAndNoButtons(yesButton, noButton, teslaImage, stage,text2);
+            makeEventHandlerForYesAndNoButtons(yesButton, noButton, teslaImage, stage, text2);
             root.getChildren().addAll(yesButton, noButton);
 
             event.consume();
         });
     }
 
-    private void makeEventHandlerForYesAndNoButtons(Button yes, Button no, ImageView teslaImage, Stage stage,Text text) {
+    private void makeEventHandlerForYesAndNoButtons(Button yes, Button no, ImageView teslaImage, Stage stage, Text text) {
         yes.setOnMouseClicked(event -> {
             Tesla.getInstance();
             Tesla.setPossibleOrNot(true);
@@ -180,6 +217,29 @@ public class MainScene extends Scene {
         //map clock
 
         buildClock(root);
+        buildGoldLabel(root);
+
+    }
+
+    private void buildGoldLabel(Group root) {
+
+        goldLabel.relocate(1100, 1);
+        goldLabel.setStyle("-fx-background-color: \n" +
+                "        #a6b5c9,\n" +
+                "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
+                "        linear-gradient(#020b02, #3a3a3a),\n" +
+                "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
+                "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                "    -fx-background-radius: 5,4,3,5;\n" +
+                "    -fx-background-insets: 0,1,2,0;\n" +
+                "    -fx-text-fill: white;\n" +
+                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                "    -fx-font-size: 12px;\n" +
+                "    -fx-padding: 10 20 10 20;" +
+                "-fx-font-weight: bold;");
+        root.getChildren().add(goldLabel);
     }
 
 

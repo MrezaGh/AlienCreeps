@@ -1,6 +1,8 @@
 package view;
 
 import controller.ControllerClass;
+import gameLogic.Engine;
+import gameLogic.map.Test;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -39,7 +41,7 @@ public class Graphic extends Application {
             if(((MainScene) stage.getScene()).getPauseState() == true){
                 return;
             }
-
+            ((MainScene)(stage.getScene())).goldLabel.setText("Gold : "+ Engine.getInstance().getPlayer().getGold());
             counter++;
 
             if (counter % 60 == 0) {
