@@ -28,6 +28,4 @@ public class LaserImages extends WeaponImages {
             System.out.println("fail loading laser firing image");
         }
     }
-
-
 }

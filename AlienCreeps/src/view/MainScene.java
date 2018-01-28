@@ -3,6 +3,7 @@ package view;
 import controller.ControllerClass;
 import controller.TimerOfGame;
 import gameLogic.Hero;
+import gameLogic.firings.Tesla;
 import gameLogic.firings.Weapon;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -10,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,12 +18,16 @@ import javafx.scene.input.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sun.reflect.MethodAccessor;
 import view.weaponImageViews.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.invoke.MethodHandle;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -34,12 +38,12 @@ public class MainScene extends Scene {
     boolean pauseButtonClicked = false;
     private Label clock;
     TimerOfGame timer = new TimerOfGame();
-    LaserImageViews laserImageViews = new LaserImageViews();
-    RocketImageViews rocketImageViews = new RocketImageViews();
-    TeslaImageViews teslaImageViews = new TeslaImageViews();
-    FreezerImageViews freezerImageViews = new FreezerImageViews();
-    MachinGunImageViews machinGunImageViews = new MachinGunImageViews();
-    AntiAircraftImageViews antiAircraftImageViews = new AntiAircraftImageViews();
+    LaserImages laserImages = new LaserImages();
+    RocketImages rocketImages = new RocketImages();
+    TeslaImages teslaImages = new TeslaImages();
+    FreezerImages freezerImages = new FreezerImages();
+    MachinGunImages machinGunImages = new MachinGunImages();
+    AntiAircraftImages antiAircraftImages = new AntiAircraftImages();
 
     public MainScene(Parent root, double width, double height, Paint fill, Stage stage) {
         super(root, width, height, fill);
@@ -51,22 +55,23 @@ public class MainScene extends Scene {
             button.setOnMouseClicked(event -> {
                 new ControllerClass().setWeapon(numOfWeaponPlace, button.getText());
                 Group root = (Group) this.getRoot();
+
                 Weapon weapon = Weapon.valueOf(button.getText());
                 switch (weapon) {
                     case Laser:
-                        weaponPlaces[numOfWeaponPlace].setImage(laserImageViews.getLaserImageViews()[0].getImage());
+                        weaponPlaces[numOfWeaponPlace].setImage(laserImages.getNonFiringImages()[0]);
                         break;
                     case Rocket:
-                        weaponPlaces[numOfWeaponPlace].setImage(rocketImageViews.getRocketImageSet()[0].getImage());
+                        weaponPlaces[numOfWeaponPlace].setImage(rocketImages.getNonFiringImages()[0]);
                         break;
                     case Freezer:
-                        weaponPlaces[numOfWeaponPlace].setImage(freezerImageViews.getFreezerImageSetImageSet()[0].getImage());
+                        weaponPlaces[numOfWeaponPlace].setImage(freezerImages.getNonFiringImages()[0]);
                         break;
                     case MachineGun:
-                        weaponPlaces[numOfWeaponPlace].setImage(machinGunImageViews.getMachinGunImageSet()[0].getImage());
+                        weaponPlaces[numOfWeaponPlace].setImage(machinGunImages.getNonFiringImages()[0]);
                         break;
                     case AntiAircraft:
-                        weaponPlaces[numOfWeaponPlace].setImage(antiAircraftImageViews.getNonFiringImages()[0].getImage());
+                        weaponPlaces[numOfWeaponPlace].setImage(antiAircraftImages.getNonFiringImages()[0]);
                         break;
                 }
                 stage.close();
@@ -79,21 +84,19 @@ public class MainScene extends Scene {
         for (int i = 0; i < weaponPlaces.length; i++) {
             int finalI = i;
             weaponPlaces[i].setOnMouseClicked(event -> {
-                TextArea textArea = new TextArea();
                 Stage stage = new Stage();
                 stage.setTitle("Enter The Weapon You Want To Put Here");
-                textArea.setMaxWidth(100);
-                textArea.setMaxHeight(100);
                 Button antiAircraftButton = new Button("AntiAircraft");
                 Button freezerButton = new Button("Freezer");
-
                 Button laserButton = new Button("Laser");
                 Button machineGunButton = new Button("MachineGun");
                 Button rocketButton = new Button("Rocket");
+
                 Button quitButton = new Button("Quit");
                 quitButton.setOnMouseClicked(event1 -> {
                     stage.close();
                 });
+
                 VBox vBox = new VBox();
 
                 ArrayList<Button> buttons = new ArrayList<>();
@@ -109,6 +112,49 @@ public class MainScene extends Scene {
                 stage.show();
             });
         }
+    }
+
+    private void makeEventHandlerForTesla(ImageView teslaImage) {
+        Text text2 = new Text();
+        text2.setText("0");
+        teslaImage.setOnMouseClicked(event -> {
+            if (text2.getText().equals("1")){
+                return;
+            }
+            Stage stage = new Stage();
+            Scene scene = new Scene(new Group());
+            stage.setScene(scene);
+            stage.setTitle("put tesla?");
+            stage.setMaxWidth(500);
+            stage.setMaxHeight(500);
+            stage.setMinWidth(400);
+            stage.setMinHeight(400);
+            Group root = (Group) scene.getRoot();
+            Text text = new Text("Are you sure?");
+            text.relocate(5, 50);
+            root.getChildren().add(text);
+            Button noButton = new Button("No");
+            noButton.relocate(150, 100);
+            Button yesButton = new Button("Yes");
+            yesButton.relocate(10, 100);
+            stage.show();
+            makeEventHandlerForYesAndNoButtons(yesButton, noButton, teslaImage, stage,text2);
+            root.getChildren().addAll(yesButton, noButton);
+
+            event.consume();
+        });
+    }
+
+    private void makeEventHandlerForYesAndNoButtons(Button yes, Button no, ImageView teslaImage, Stage stage,Text text) {
+        yes.setOnMouseClicked(event -> {
+            Tesla.getInstance();
+            Tesla.setPossibleOrNot(true);
+            teslaImage.setImage(teslaImages.getNonFiringImages()[0]);
+            teslaImage.removeEventHandler(event.getEventType(), teslaImage.getOnMouseClicked());
+            text.setText("1");
+            stage.close();
+        });
+        no.setOnMouseClicked(event -> stage.close());
     }
 
 
@@ -142,7 +188,6 @@ public class MainScene extends Scene {
         try {
             ImageView background = new ImageView(new Image(new FileInputStream(new File("images/map.png/"))));
             weaponplaces[0] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
-
             weaponplaces[1] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
             weaponplaces[2] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
             weaponplaces[3] = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
@@ -161,7 +206,13 @@ public class MainScene extends Scene {
             makeAllWeapnPlaceEventHandlers(weaponplaces);
 
             root.getChildren().add(background);
-            root.getChildren().addAll(weaponplaces[0], weaponplaces[1], weaponplaces[2], weaponplaces[3], weaponplaces[4], weaponplaces[5], weaponplaces[6], weaponplaces[7]);
+            ImageView teslaPlace = new ImageView(new Image(new FileInputStream(new File("images/map images/weaponPlace.png"))));
+            teslaPlace.relocate(18 * 32, 960 - (12 * 32));
+            ImageView putTeslaHere = new ImageView(new Image(new FileInputStream(new File("images/place_tesla_here.png"))));
+            putTeslaHere.relocate(14 * 32, 960 - (12 * 32));
+            makeEventHandlerForTesla(teslaPlace);
+            root.getChildren().addAll(weaponplaces[0], weaponplaces[1], weaponplaces[2], weaponplaces[3], weaponplaces[4], weaponplaces[5], weaponplaces[6], weaponplaces[7], teslaPlace, putTeslaHere);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

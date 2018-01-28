@@ -15,7 +15,7 @@ public class TeslaImages extends WeaponImages {
     @Override
     protected void makeFiringImages() {
         try {
-            firingImages[0] = new Image(new FileInputStream("images/teslaFiring.png"));
+            firingImages[0] = new Image(new FileInputStream("images/Tesla/teslaFiring.png"));
         } catch (FileNotFoundException e) {
             System.out.println("fail loading tesla firing image");
         }
@@ -24,7 +24,7 @@ public class TeslaImages extends WeaponImages {
     @Override
     protected void makeNonFiringImages() {
         try {
-            nonFiringImages[0] = new Image(new FileInputStream("images/tesla.png"));
+            nonFiringImages[0] = new Image(new FileInputStream("images/Tesla/tesla.png"));
         } catch (FileNotFoundException e) {
             System.out.println("fail loading tesla image");
         }

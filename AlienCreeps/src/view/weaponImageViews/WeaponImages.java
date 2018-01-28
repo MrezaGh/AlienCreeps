@@ -10,6 +10,8 @@ public abstract class WeaponImages {
     protected HashMap<Image, Image> mapOfNonToFiring = new HashMap<>();
 
     public WeaponImages(int numOfImages) {
+        nonFiringImages = new Image[numOfImages];
+        firingImages = new Image[numOfImages];
         makeMapOfNonToFiring(numOfImages);
     }
 
