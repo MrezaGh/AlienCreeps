@@ -1,32 +1,34 @@
 package gameLogic.firings.movableFirings;
 
-import controller.TimerOfGame;
-import gameLogic.firings.movableFirings.MovableFirings;
-import javafx.event.EventHandler;
+import gameLogic.Engine;
+import gameLogic.firings.Gun;
+import gameLogic.firings.movableFirings.alienCreeps.AlienCreeps;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
-public class Hero extends MovableFirings{
+public class Hero extends YourFighters {
     private Group root;
     private int energy;
     private int power;
     private int fireRate;
     private double fireRange;
     private int[] coordinate = new int[2];
-    public ImageView[] heroMoveLeftPics= new ImageView[4];
+    public ImageView[] heroMoveLeftPics = new ImageView[4];
     public ImageView[] heroMoveRightPics = new ImageView[4];
     public ImageView[] heroMoveForwardPics = new ImageView[4];
     public ImageView[] heroMoveDownwardPics = new ImageView[4];
     private int walkState = 0;
+    Gun gun;
+    private ArrayList<Soldier> allSoldiers = new ArrayList<>();
 
     public Hero(Group root) {//todo change variables
+        super();
         this.energy = 100;
         this.power = 8;
         this.fireRate = 5;
@@ -34,6 +36,7 @@ public class Hero extends MovableFirings{
         this.coordinate = new int[]{1056, 872};
         MovableFirings.getAllMovableFirings().add(this);
         this.root = root;
+        Engine.getInstance().hero = this;
         try {
             heroMoveLeftPics[0] = new ImageView(new Image(new FileInputStream(new File("images/hero images/MoveLeft1.png"))));
             heroMoveLeftPics[1] = new ImageView(new Image(new FileInputStream(new File("images/hero images/MoveLeft2.png"))));
@@ -57,45 +60,49 @@ public class Hero extends MovableFirings{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        drawHero(heroMoveLeftPics,walkState);
+        drawHero(heroMoveLeftPics, walkState);
     }
 
-    public void moveHeroForward(int speed)  {
-        this.setCoordinate(new int[]{getCoordinate()[0],getCoordinate()[1]-speed});
+    public void moveHeroForward(int speed) {
+        this.setCoordinate(new int[]{getCoordinate()[0], getCoordinate()[1] - speed});
         walkState++;
         if (walkState == 4)
-            walkState=0;
-        drawHero(heroMoveForwardPics,walkState);
+            walkState = 0;
+        drawHero(heroMoveForwardPics, walkState);
     }
-    public void moveHeroDownward(int speed)  {
-        this.setCoordinate(new int[]{getCoordinate()[0],getCoordinate()[1]+speed});
+
+    public void moveHeroDownward(int speed) {
+        this.setCoordinate(new int[]{getCoordinate()[0], getCoordinate()[1] + speed});
         walkState++;
         if (walkState == 4)
-            walkState=0;
-        drawHero(heroMoveDownwardPics,walkState);
+            walkState = 0;
+        drawHero(heroMoveDownwardPics, walkState);
     }
-    public void moveHeroLeft(int speed)  {
-        this.setCoordinate(new int[]{getCoordinate()[0]-speed,getCoordinate()[1]});
+
+    public void moveHeroLeft(int speed) {
+        this.setCoordinate(new int[]{getCoordinate()[0] - speed, getCoordinate()[1]});
         walkState++;
         if (walkState == 4)
-            walkState=0;
-        drawHero(heroMoveLeftPics,walkState);
+            walkState = 0;
+        drawHero(heroMoveLeftPics, walkState);
     }
-    public void moveHeroRight(int speed)  {
-        this.setCoordinate(new int[]{getCoordinate()[0]+speed,getCoordinate()[1]});
+
+    public void moveHeroRight(int speed) {
+        this.setCoordinate(new int[]{getCoordinate()[0] + speed, getCoordinate()[1]});
         walkState++;
         if (walkState == 4)
-            walkState=0;
-        drawHero(heroMoveRightPics,walkState);
+            walkState = 0;
+        drawHero(heroMoveRightPics, walkState);
     }
+
     public void drawHero(ImageView[] heroPics, int stateOfWalk) {
 
         try {
             ImageView hero = heroPics[stateOfWalk];
-            hero.relocate(getCoordinate()[0],getCoordinate()[1]);
+            hero.relocate(getCoordinate()[0], getCoordinate()[1]);
             removePreviousHeroPic();
             root.getChildren().add(hero);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -104,22 +111,58 @@ public class Hero extends MovableFirings{
     }
 
     private void removePreviousHeroPic() {
-        for (ImageView element: heroMoveForwardPics) {
+        for (ImageView element : heroMoveForwardPics) {
             if (root.getChildren().contains(element))
                 root.getChildren().remove(element);
         }
-        for (ImageView element: heroMoveDownwardPics) {
+        for (ImageView element : heroMoveDownwardPics) {
             if (root.getChildren().contains(element))
                 root.getChildren().remove(element);
         }
-        for (ImageView element: heroMoveLeftPics) {
+        for (ImageView element : heroMoveLeftPics) {
             if (root.getChildren().contains(element))
                 root.getChildren().remove(element);
         }
-        for (ImageView element: heroMoveRightPics) {
+        for (ImageView element : heroMoveRightPics) {
             if (root.getChildren().contains(element))
                 root.getChildren().remove(element);
         }
+    }
+
+    private ArrayList<AlienCreeps> findHeroTargets() {
+        if (gun.isPogromist() == false) {
+            return this.findOneTarget();
+        } else {
+            return this.findSomeTarget();
+        }
+    }
+
+    @Override
+    public void weaken() {
+        ArrayList<AlienCreeps> targets = findHeroTargets();
+            for (AlienCreeps target : targets) {
+                if (target.getAlienCreepTypes().getType().equals("air")) {
+                    target.setEnergy(target.getEnergy() - gun.getPowerOnAirUnits());
+                } else {
+                    target.setEnergy(target.getEnergy() - gun.getPowerOnGroundUnits());
+                }
+
+                targets = manageTargets(targets);
+            }
+        findTargetOfAlienCreep(targets);
+    }
+
+    @Override
+    public void freeze() {
+        ArrayList<AlienCreeps> targets = findSomeTarget();
+
+            for (MovableFirings target : targets) {
+                if (target.getSpeedModified() != target.getSpeedUnmodified()) {
+                    continue;//TODO
+                }
+
+                target.setSpeedModified(((100 - gun.getSpeedReduction()) / 100) * target.getSpeedUnmodified());
+            }
     }
 
 
@@ -163,13 +206,24 @@ public class Hero extends MovableFirings{
         this.coordinate = coordinate;
     }
 
-    @Override
-    public void shoot(TimerOfGame time) {
+    public Gun getGun() {
+        return gun;
+    }
 
+    public ArrayList<Soldier> getAllSoldiers() {
+        return allSoldiers;
     }
 
     @Override
-    public void weaken(TimerOfGame time) {
+    public void shoot() {
 
     }
+
+
+    @Override
+    protected void increaseExperience() {
+
+    }
+
+
 }

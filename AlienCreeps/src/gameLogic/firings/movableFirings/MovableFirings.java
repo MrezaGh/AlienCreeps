@@ -17,7 +17,7 @@ public abstract class MovableFirings  implements Firings {
     private int[] coordinate = new int[2];
 
 
-    public MovableFirings(int speedUnmodified, int speedModified, int energy, int power, int fireRate, double fireRange, boolean isPogromist, int[] coordinate) {
+    public MovableFirings(int speedUnmodified, int speedModified, int energy, int power, int fireRate, double fireRange, boolean isPogromist) {
         this.speedUnmodified = speedUnmodified;
         this.speedModified = speedModified;
         this.energy = energy;

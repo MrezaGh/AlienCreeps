@@ -6,10 +6,10 @@ import gameLogic.map.Path;
 import java.util.Random;
 
 public enum AlienCreepTypes {
-    Activionion(400, 2, "ground", 40),
-    Aironion(200, 5, "air", 20),
-    Albertonion(250, 10, "ground", 7),
-    Algwasonion(150, 5, "ground", 25);
+    Activionion(2, 400, 2, "ground", 40),
+    Aironion(5, 200, 5, "air", 20),
+    Albertonion(5, 250, 10, "ground", 7),
+    Algwasonion(10, 150, 5, "ground", 25);
 
     private String type;//air or ground
     int initEnergy;
@@ -24,10 +24,10 @@ public enum AlienCreepTypes {
         //TODO
     }
 
-    AlienCreepTypes(int energy, int speed, String type, int power) {
+    AlienCreepTypes(int fireRate, int energy, int speed, String type, int power) {
         setType(type);
         initEnergy = energy;
-        this.speed = speed;
+        this.speed = 60;
         this.power = power;
     }
 
@@ -38,7 +38,6 @@ public enum AlienCreepTypes {
     public void setType(String type) {
         this.type = type;
     }
-
 
 
     public int getInitEnergy() {

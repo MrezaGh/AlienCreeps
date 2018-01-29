@@ -11,9 +11,10 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import view.weaponImageViews.alienCreepsImages.ActivinionImages;
@@ -21,7 +22,6 @@ import view.weaponImageViews.alienCreepsImages.AironionImages;
 import view.weaponImageViews.alienCreepsImages.AlbertonionImages;
 import view.weaponImageViews.alienCreepsImages.AlgwasonionImages;
 
-import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class Graphic extends Application {
@@ -47,14 +47,14 @@ public class Graphic extends Application {
     }
 
     AnimationTimer animationTimer = new AnimationTimer() {
-        int counter = 0;
+        Integer counter = 0;
 
         @Override
         public void handle(long now) {
             if (stage.getScene() instanceof StartScene) {
                 return;
             }
-            if (isMainSceneOrNot == false) {
+            if (!(stage.getScene() instanceof MainScene)) {
                 return;
             }
             if (((MainScene) stage.getScene()).getPauseState() == true) {
@@ -67,86 +67,113 @@ public class Graphic extends Application {
             manageEndPointForWormHoles();
 
             //for (AlienCreeps alienCreeps : AlienCreeps.getAllAlienCreeps()) {
-            for (int i = 0; i < AlienCreeps.getAllAlienCreeps().size(); i++) {
-                AlienCreeps alienCreeps = AlienCreeps.getAllAlienCreeps().get(i);
-                alienCreeps.setCounterForMove(alienCreeps.getCounterForMove() + 1);
-                if (alienCreeps.getCounterForMove() % (alienCreeps.getAlienCreepTypes().getSpeed()) == 0) {
-                    // System.out.println(alienCreeps.getAlienCreepTypes().toString() + " counter = " + counter);
-                    if (alienCreeps.getCurrentHomeNo() == alienCreeps.getPath().getThisPathHomes().size() - 1) {
-                        Engine.getInstance().getPlayer().setFlag(Engine.getInstance().getPlayer().getFlag() + 1);
-                        if (Engine.getInstance().getPlayer().getFlag() == 5) {
-                            Stage gameOverStage = new Stage();
-                            Scene gameOverScene = new Scene(new Group());
-                            Group root = (Group) gameOverScene.getRoot();
-                            Label label = new Label("Game Over");
-                            gameOverStage.setScene(gameOverScene);
-                            root.getChildren().add(label);
-                            gameOverStage.show();
-                        }
-                        AlienCreeps.getAllAlienCreeps().remove(alienCreeps);
-                        i--;
-                        continue;
-                    }
-
-                    if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[1] == alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[1]) {
-                        if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[0] > alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[0]) {
-                            alienCreeps.getCoordinates()[0] = alienCreeps.getCoordinates()[0] - 1;
-                        } else if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[0] < alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[0]) {
-                            alienCreeps.getCoordinates()[0] = alienCreeps.getCoordinates()[0] + 1;
-                        }
-                        alienCreeps.setMoved32Pixel(alienCreeps.getMoved32Pixel() + 1);
-                        if (alienCreeps.getMoved32Pixel() == 32) {
-                            alienCreeps.setCurrentHomeNo(alienCreeps.getCurrentHomeNo() + 1);
-                            alienCreeps.setMoved32Pixel(0);
-                        }
-                    }
-
-                    if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[0] == alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[0]) {
-                        if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[1] > alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[1]) {
-                            alienCreeps.getCoordinates()[1] = alienCreeps.getCoordinates()[1] - 1;
-                        } else if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[1] < alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[1]) {
-                            alienCreeps.getCoordinates()[1] = alienCreeps.getCoordinates()[1] + 1;
-                        }
-                        alienCreeps.setMoved32Pixel(alienCreeps.getMoved32Pixel() + 1);
-                        if (alienCreeps.getMoved32Pixel() == 32) {
-                            alienCreeps.setCurrentHomeNo(alienCreeps.getCurrentHomeNo() + 1);
-                            alienCreeps.setMoved32Pixel(0);
-                        }
-                    }
-
-                    ImageView imageView = null;
-                    rootOfMianScene.getChildren().remove(alienCreeps.getImageView());
-                    switch (alienCreeps.getAlienCreepTypes()) {
-                        case Aironion:
-                            alienCreeps.setImageView(new ImageView(aironionImages.getNonFiringImages()[0]));
-                            break;
-                        case Activionion:
-                            alienCreeps.setImageView(new ImageView(activinionImages.getMoveForwardImages()[0]));
-                            break;
-                        case Albertonion:
-                            alienCreeps.setImageView(new ImageView(albertonionImages.getMoveForwardImages()[0]));
-                            break;
-                        case Algwasonion:
-                            alienCreeps.setImageView(new ImageView(algwasonionImages.getMoveForwardImages()[0]));
-                            break;
-                    }
-                    alienCreeps.getImageView().relocate(alienCreeps.getCoordinates()[0], alienCreeps.getCoordinates()[1]);
-                    rootOfMianScene.getChildren().add(alienCreeps.getImageView());
-                }
-            }
+            moveOfAliens(rootOfMianScene, counter);
 
             //}
             if (counter % 60 == 0) {
-                //System.out.println(((MainScene) (stage.getScene())).hero.getCoordinate()[0]);
                 ((MainScene) stage.getScene()).timer.increaseTimer();
                 ((MainScene) stage.getScene()).getClock().setText(((MainScene) stage.getScene()).timer.toString());
             }
             if (counter % 240 == 0) {
                 makeAlienCreeps();
-                System.out.println(AlienCreeps.getAllAlienCreeps().size());
             }
         }
     };
+
+    private void moveOfAliens(Group rootOfMianScene, int counter) {
+
+        outer:
+        for (int i = 0; i < AlienCreeps.getAllAlienCreeps().size(); i++) {
+            AlienCreeps alienCreeps = AlienCreeps.getAllAlienCreeps().get(i);
+            alienCreeps.setCounterForMove(alienCreeps.getCounterForMove() + 1);
+            if (alienCreeps.getCounterForMove() % (60 / alienCreeps.getAlienCreepTypes().getSpeed()) == 0) {
+                // System.out.println(alienCreeps.getAlienCreepTypes().toString() + " counter = " + counter);
+                if (alienCreeps.getCurrentHomeNo() == alienCreeps.getPath().getThisPathHomes().size() - 1) {
+                    Engine.getInstance().getPlayer().setFlag(Engine.getInstance().getPlayer().getFlag() + 1);
+                    if (Engine.getInstance().getPlayer().getFlag() == 5) {
+                        Engine.getInstance().getPlayer().setFlag(0);
+                        AlienCreeps.getAllAlienCreeps().clear();
+                        counter = 0;
+                        stage.close();
+                        ((MainScene) stage.getScene()).setPauseState(true);
+                        Stage gameOverStage = new Stage();
+                        Scene gameOverScene = new Scene(new Group());
+                        Group root = (Group) gameOverScene.getRoot();
+                        Label label = new Label("Game Over");
+                        Button returnToMainMenuButton = new Button("return to main menu");
+                        Button exitButton = new Button("Exit");
+                        gameOverStage.setScene(gameOverScene);
+                        root.getChildren().addAll(label, returnToMainMenuButton, exitButton);
+                        exitButton.setOnMouseClicked(event -> {
+                            gameOverStage.close();
+                        });
+                        VBox vBox = new VBox();
+                        vBox.getChildren().addAll(label, returnToMainMenuButton, exitButton);
+                        Group rootOfGameOverScene = (Group) gameOverScene.getRoot();
+                        gameOverStage.setScene(gameOverScene);
+                        rootOfGameOverScene.getChildren().add(vBox);
+                        gameOverStage.show();
+                        returnToMainMenuButton.setOnMouseClicked(event -> {
+                            stage = new Stage();
+                            stage.setScene(new StartScene(new Group(), 1280, 960, Color.BLUE, stage));
+                            stage.show();
+                            gameOverStage.close();
+                        });
+                        break outer;
+                    }
+                    AlienCreeps.getAllAlienCreeps().remove(alienCreeps);
+                    rootOfMianScene.getChildren().remove(alienCreeps.getImageView());
+                    i--;
+                    continue outer;
+                }
+
+                if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[1] == alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[1]) {
+                    if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[0] > alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[0]) {
+                        alienCreeps.getCoordinates()[0] = alienCreeps.getCoordinates()[0] - 1;
+                    } else if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[0] < alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[0]) {
+                        alienCreeps.getCoordinates()[0] = alienCreeps.getCoordinates()[0] + 1;
+                    }
+                    alienCreeps.setMoved32Pixel(alienCreeps.getMoved32Pixel() + 1);
+                    if (alienCreeps.getMoved32Pixel() == 32) {
+                        alienCreeps.setCurrentHomeNo(alienCreeps.getCurrentHomeNo() + 1);
+                        alienCreeps.setMoved32Pixel(0);
+                    }
+                }
+
+                if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[0] == alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[0]) {
+                    if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[1] > alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[1]) {
+                        alienCreeps.getCoordinates()[1] = alienCreeps.getCoordinates()[1] - 1;
+                    } else if (alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo())[1] < alienCreeps.getPath().getThisPathHomes().get(alienCreeps.getCurrentHomeNo() + 1)[1]) {
+                        alienCreeps.getCoordinates()[1] = alienCreeps.getCoordinates()[1] + 1;
+                    }
+                    alienCreeps.setMoved32Pixel(alienCreeps.getMoved32Pixel() + 1);
+                    if (alienCreeps.getMoved32Pixel() == 32) {
+                        alienCreeps.setCurrentHomeNo(alienCreeps.getCurrentHomeNo() + 1);
+                        alienCreeps.setMoved32Pixel(0);
+                    }
+                }
+
+                ImageView imageView = null;
+                rootOfMianScene.getChildren().remove(alienCreeps.getImageView());
+                switch (alienCreeps.getAlienCreepTypes()) {
+                    case Aironion:
+                        alienCreeps.setImageView(new ImageView(aironionImages.getNonFiringImages()[0]));
+                        break;
+                    case Activionion:
+                        alienCreeps.setImageView(new ImageView(activinionImages.getMoveForwardImages()[0]));
+                        break;
+                    case Albertonion:
+                        alienCreeps.setImageView(new ImageView(albertonionImages.getMoveForwardImages()[0]));
+                        break;
+                    case Algwasonion:
+                        alienCreeps.setImageView(new ImageView(algwasonionImages.getMoveForwardImages()[0]));
+                        break;
+                }
+                alienCreeps.getImageView().relocate(alienCreeps.getCoordinates()[0], alienCreeps.getCoordinates()[1]);
+                rootOfMianScene.getChildren().add(alienCreeps.getImageView());
+            }
+        }
+    }
 
     private void manageEndPointForWormHoles() {
         for (MovableFirings movableFirings : MovableFirings.getAllMovableFirings()) {
@@ -198,23 +225,15 @@ public class Graphic extends Application {
         switch (randomNumber) {
             case 1:
                 alienCreep = new AlienCreeps(AlienCreepTypes.Activionion);
-                System.out.println("chete");
-                AlienCreeps.getAllAlienCreeps().add(alienCreep);
                 break;
             case 2:
                 alienCreep = new AlienCreeps(AlienCreepTypes.Algwasonion);
-                AlienCreeps.getAllAlienCreeps().add(alienCreep);
-                System.out.println("chete");
                 break;
             case 3:
                 alienCreep = new AlienCreeps(AlienCreepTypes.Aironion);
-                AlienCreeps.getAllAlienCreeps().add(alienCreep);
-                System.out.println("chete");
                 break;
             case 4:
                 alienCreep = new AlienCreeps(AlienCreepTypes.Albertonion);
-                AlienCreeps.getAllAlienCreeps().add(alienCreep);
-                System.out.println("chete");
                 break;
         }
     }

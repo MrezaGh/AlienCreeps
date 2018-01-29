@@ -1,12 +1,14 @@
 package gameLogic.firings.movableFirings.alienCreeps;
 
+import gameLogic.firings.movableFirings.MovableFirings;
+import gameLogic.firings.movableFirings.YourFighters;
 import gameLogic.map.Path;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AlienCreeps {
+public class AlienCreeps extends MovableFirings {
     private static ArrayList<AlienCreeps> allAlienCreeps = new ArrayList<>();
     private AlienCreepTypes alienCreepTypes;
     private int energy;
@@ -16,6 +18,7 @@ public class AlienCreeps {
     private int moved32Pixel = 0;
     private int[] coordinates = new int[2];
     ImageView imageView = new ImageView();
+    private ArrayList<YourFighters> shooterToThis = new ArrayList<>();
 
     public AlienCreeps(AlienCreepTypes alienCreepTypes) {
         this.alienCreepTypes = alienCreepTypes;
@@ -114,5 +117,24 @@ public class AlienCreeps {
 
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
+    }
+
+    public ArrayList<YourFighters> getShooterToThis() {
+        return shooterToThis;
+    }
+
+    public void setShooterToThis(ArrayList<YourFighters> shooterToThis) {
+        this.shooterToThis = shooterToThis;
+    }
+
+
+    @Override
+    public void shoot() {
+
+    }
+
+    @Override
+    public void weaken() {
+
     }
 }
