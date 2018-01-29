@@ -3,11 +3,11 @@ package view;
 import controller.ControllerClass;
 import controller.TimerOfGame;
 import gameLogic.Engine;
-import gameLogic.Hero;
+import gameLogic.firings.movableFirings.Hero;
 import gameLogic.WeaponPlace;
 import gameLogic.firings.Tesla;
 import gameLogic.firings.Weapon;
-import gameLogic.map.Test;
+import gameLogic.map.WormHole;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -46,6 +46,7 @@ public class MainScene extends Scene {
     MachinGunImages machinGunImages = new MachinGunImages();
     AntiAircraftImages antiAircraftImages = new AntiAircraftImages();
     Label goldLabel = new Label("Gold : " + Engine.getInstance().getPlayer().getGold());
+    Hero hero;
 
     public MainScene(Parent root, double width, double height, Paint fill, Stage stage) {
         super(root, width, height, fill);
@@ -53,8 +54,6 @@ public class MainScene extends Scene {
     }
 
     private void makeEventHandlerForWeaponButtons(ArrayList<Button> buttons, int numOfWeaponPlace, Stage stage, ImageView[] weaponPlaces) {
-        //TODO remove
-        Test.testPath();
         for (Button button : buttons) {
             button.setOnMouseClicked(event -> {
                 try {
@@ -202,7 +201,7 @@ public class MainScene extends Scene {
         buildMapPreview(root);
 
         //hero
-        Hero hero = new Hero(root);
+        hero = new Hero(root);
 
         //key listener
         makeKeyListener(hero);
@@ -219,6 +218,23 @@ public class MainScene extends Scene {
         buildClock(root);
         buildGoldLabel(root);
 
+        makeWormHoleImages(root);
+
+    }
+
+    private void makeWormHoleImages(Group root) {
+        for (WormHole wormHole : WormHole.getWormHoles()) {
+            try {
+                ImageView wormHoleStartImage = new ImageView(new Image(new FileInputStream("images/wormHole2.png")));
+                wormHoleStartImage.relocate(wormHole.getStartCoordinates()[0], wormHole.getStartCoordinates()[1]);
+                root.getChildren().add(wormHoleStartImage);
+                ImageView wormHoleEndImage = new ImageView(new Image(new FileInputStream("images/wormHole2.png")));
+                wormHoleEndImage.relocate(wormHole.getEndCoordinates()[0], wormHole.getEndCoordinates()[1]);
+                root.getChildren().add(wormHoleEndImage);
+            } catch (FileNotFoundException e) {
+                System.out.println("fail loading wormHole image");
+            }
+        }
     }
 
     private void buildGoldLabel(Group root) {

@@ -1,5 +1,7 @@
-package gameLogic;
+package gameLogic.firings.movableFirings;
 
+import controller.TimerOfGame;
+import gameLogic.firings.movableFirings.MovableFirings;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -11,7 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class Hero {
+public class Hero extends MovableFirings{
     private Group root;
     private int energy;
     private int power;
@@ -30,6 +32,7 @@ public class Hero {
         this.fireRate = 5;
         this.fireRange = 2;
         this.coordinate = new int[]{1056, 872};
+        MovableFirings.getAllMovableFirings().add(this);
         this.root = root;
         try {
             heroMoveLeftPics[0] = new ImageView(new Image(new FileInputStream(new File("images/hero images/MoveLeft1.png"))));
@@ -95,6 +98,9 @@ public class Hero {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        setMovableMoved(true);
+
     }
 
     private void removePreviousHeroPic() {
@@ -155,5 +161,15 @@ public class Hero {
 
     public void setCoordinate(int[] coordinate) {
         this.coordinate = coordinate;
+    }
+
+    @Override
+    public void shoot(TimerOfGame time) {
+
+    }
+
+    @Override
+    public void weaken(TimerOfGame time) {
+
     }
 }

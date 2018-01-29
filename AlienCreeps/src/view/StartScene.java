@@ -1,6 +1,5 @@
 package view;
 
-import gameLogic.map.Test;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.*;
@@ -507,7 +506,6 @@ public class StartScene extends Scene {
             public void handle(ActionEvent event) {
                 Graphic.setIsMainSceneOrNot(true);
                 MainScene mainScene = new MainScene(new Group(), 1280, 960, Color.GRAY, stage);
-                Test.mainScene = mainScene; // TODO remove
                 stage.setScene(mainScene);
             }
         });

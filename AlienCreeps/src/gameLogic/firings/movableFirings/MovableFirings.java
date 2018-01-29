@@ -2,7 +2,11 @@ package gameLogic.firings.movableFirings;
 
 import gameLogic.firings.Firings;
 
+import java.util.ArrayList;
+
 public abstract class MovableFirings  implements Firings {
+    private boolean movableMoved = false;
+    private static ArrayList<MovableFirings> allMovableFirings = new ArrayList<>();
     private int speedUnmodified;
     private int speedModified;
     private int energy;
@@ -114,5 +118,15 @@ public abstract class MovableFirings  implements Firings {
     }
 
 
+    public static ArrayList<MovableFirings> getAllMovableFirings() {
+        return allMovableFirings;
+    }
 
+    public boolean isMovableMoved() {
+        return movableMoved;
+    }
+
+    public void setMovableMoved(boolean movableMoved) {
+        this.movableMoved = movableMoved;
+    }
 }

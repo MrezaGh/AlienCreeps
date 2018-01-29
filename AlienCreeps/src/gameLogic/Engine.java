@@ -1,5 +1,7 @@
 package gameLogic;
 
+import gameLogic.map.WormHole;
+
 public class Engine {
     private Player player;
     private static Engine engine = new Engine(new Player());
