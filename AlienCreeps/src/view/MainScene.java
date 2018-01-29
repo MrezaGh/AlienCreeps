@@ -24,7 +24,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import view.weaponImageViews.*;
+import view.weaponImageViews.weaponImmages.*;
 
 import java.io.File;
 import java.io.FileInputStream;
