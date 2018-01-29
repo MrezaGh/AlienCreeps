@@ -7,17 +7,19 @@ public class Path {
     private static ArrayList<int[]> pathHomes1_2 = new ArrayList<>();
     private static ArrayList<int[]> pathHomes2_1 = new ArrayList<>();
     private static ArrayList<int[]> pathHomes2_2 = new ArrayList<>();
-    private static ArrayList<int[][]> pathHomes1 = new ArrayList<>();
-    private static ArrayList<int[][]> pathHomes2 = new ArrayList<>();
+    private ArrayList<int[]> thisPathHomes;
 
-    public Path() {
+    static {
         makePathHomes1_1();
-        //makePathHomes1_2();
-        //makePathHomes2_1();
-        //makePathHomes2_2();
+        makePathHomes1_2();
+        makePathHomes2_1();
+        makePathHomes2_2();
+    }
+    public Path() {
+
     }
 
-    private void makePathHomes1_1() {
+    private static void makePathHomes1_1() {
         int[] a;
         for (int i = 0; i < 11; i++) {
             a = new int[]{i * 32, 704};
@@ -41,7 +43,7 @@ public class Path {
         }
     }
 
-    private void makePathHomes1_2() {
+    private static void makePathHomes1_2() {
         int[] a;
         for (int i = 0; i < 12; i++) {
             a = new int[]{i * 32, 704 + 32};
@@ -101,7 +103,7 @@ public class Path {
         }
     }*/
 
-    private void makePathHomes2_1() {
+    private static void makePathHomes2_1() {
         int[] a;
         for (int i = 0; i < 8; i++) {
             a = new int[]{7 * 32, i * 32};
@@ -129,7 +131,7 @@ public class Path {
         }
     }
 
-    private void makePathHomes2_2() {
+    private static void makePathHomes2_2() {
         int[] a;
         for (int i = 0; i < 7; i++) {
             a = new int[]{8 * 32, i * 32};
@@ -174,8 +176,11 @@ public class Path {
         return pathHomes2_2;
     }
 
-    public static void setPathHomes1(ArrayList<int[][]> pathHomes1) {
-        Path.pathHomes1 = pathHomes1;
+    public ArrayList<int[]> getThisPathHomes() {
+        return thisPathHomes;
     }
 
+    public void setThisPathHomes(ArrayList<int[]> thisPathHomes) {
+        this.thisPathHomes = thisPathHomes;
+    }
 }
