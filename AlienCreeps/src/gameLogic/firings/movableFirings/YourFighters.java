@@ -4,14 +4,23 @@ import gameLogic.Engine;
 import gameLogic.firings.movableFirings.alienCreeps.AlienCreeps;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
 
 public abstract class YourFighters extends MovableFirings {
+    private static ArrayList<MovableFirings> allMovableFirings = new ArrayList<>();
     private ArrayList<AlienCreeps> alienCreepsKilled = new ArrayList<>();
     protected int experience;
     protected int level = 1;
+    private boolean deadStat = false;
+    private int[] coordinates = new int[2];
+    boolean fireStat = false;
 
+    public int[] getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(int[] coordinates) {
+        this.coordinates = coordinates;
+    }
 
     public int getExperience() {
         return experience;
@@ -60,7 +69,7 @@ public abstract class YourFighters extends MovableFirings {
         double minDistance = 0;
         ArrayList<AlienCreeps> targets = new ArrayList<>();
         for (AlienCreeps alienCreep : AlienCreeps.getAllAlienCreeps()) {
-            distance = calculateDistance(this.getCoordinate(), alienCreep.getCoordinates());
+            distance = calculateDistance(this.getCoordinates(), alienCreep.getCoordinates());
             if (distance < this.getFireRange()) {
 
                 if (alienCreep.getAlienCreepTypes().getType().equals("air") && ((Hero) this).getGun().getPowerOnAirUnits() == 0) {
@@ -84,7 +93,7 @@ public abstract class YourFighters extends MovableFirings {
         double distance;
         ArrayList<AlienCreeps> targets = new ArrayList<>();
         for (AlienCreeps alienCreep : AlienCreeps.getAllAlienCreeps()) {
-            distance = calculateDistance(this.getCoordinate(), alienCreep.getCoordinates());
+            distance = calculateDistance(this.getCoordinates(), alienCreep.getCoordinates());
             if (distance < getFireRange()) {
                 /*if (!(alienCreep.getType().equals(((Hero)this).getGun()))){
                     continue;
@@ -102,10 +111,8 @@ public abstract class YourFighters extends MovableFirings {
         return targets;
     }
 
-    public void shoot() {
-        weaken();
-        freeze();
-    }
+
+
 
     public abstract void freeze();
 
@@ -116,15 +123,31 @@ public abstract class YourFighters extends MovableFirings {
                 return;
             }
             AlienCreeps alienCreep = (AlienCreeps) targets.get(0);
-            alienCreep.setShooterToThis(new ArrayList<YourFighters>(Arrays.asList(this)));
+            alienCreep.setShooterToThis(this);
         }
     }
 
     public YourFighters() {
-        super(0, 0, 300, 6, 20, 0.5 * 20, false);
+        super(0, 0, 300, 6, 5, 0.5 * 100, false);
     }
 
     public YourFighters(boolean b) {
-        super(0, 0, 150, 20, 5, 0.5 * 20,false);
+        super(0, 0, 150, 20, 5, 0.5 * 100,false);
+    }
+
+    public boolean getDeadStat() {
+        return deadStat;
+    }
+
+    public void setDeadStat(boolean deadStat) {
+        this.deadStat = deadStat;
+    }
+
+    public boolean isFireStat() {
+        return fireStat;
+    }
+
+    public void setFireStat(boolean fireStat) {
+        this.fireStat = fireStat;
     }
 }

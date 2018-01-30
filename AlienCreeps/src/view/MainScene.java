@@ -3,10 +3,10 @@ package view;
 import controller.ControllerClass;
 import controller.TimerOfGame;
 import gameLogic.Engine;
-import gameLogic.firings.movableFirings.Hero;
 import gameLogic.WeaponPlace;
 import gameLogic.firings.Tesla;
 import gameLogic.firings.Weapon;
+import gameLogic.firings.movableFirings.Hero;
 import gameLogic.map.WormHole;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -34,7 +34,7 @@ import java.util.Arrays;
 
 public class MainScene extends Scene {
 
-
+    public static boolean moved = false;
     boolean pauseState = false;
     boolean pauseButtonClicked = false;
     private Label clock;
@@ -219,6 +219,25 @@ public class MainScene extends Scene {
         buildGoldLabel(root);
 
         makeWormHoleImages(root);
+        mainScene.setOnKeyPressed(event -> {
+            if ((event.getCode().equals(KeyCode.UP)) || (event.getCode().equals(KeyCode.DOWN)) || event.getCode().equals(KeyCode.RIGHT) || event.getCode().equals(KeyCode.LEFT)) {
+                moved = true;
+            }
+        });
+        mainScene.setOnKeyReleased(event -> {
+            if ((event.getCode().equals(KeyCode.UP)) || (event.getCode().equals(KeyCode.DOWN)) || event.getCode().equals(KeyCode.RIGHT) || event.getCode().equals(KeyCode.LEFT)) {
+                moved = false;
+            }
+        });
+
+        Button buyGunButton = new Button("Buy Gun");
+        buyGunButton.setOnMouseClicked(event -> {
+            Stage buyGunStage = new Stage();
+            Scene buyGunScene = new Scene(new Group());
+            Group buyGunRoot = (Group) buyGunScene.getRoot();
+            buyGunStage.setScene(buyGunScene);
+            ksjdh
+        });
 
     }
 
@@ -339,30 +358,42 @@ public class MainScene extends Scene {
     }
 
     private void moveHero(Hero hero, KeyEvent event) {
+        if (hero.getDeadStat() == true) {
+            return;
+        }
+
         KeyCombination upShift = new KeyCodeCombination(KeyCode.UP, KeyCodeCombination.SHIFT_DOWN);
         KeyCombination downShift = new KeyCodeCombination(KeyCode.DOWN, KeyCodeCombination.SHIFT_DOWN);
         KeyCombination leftShift = new KeyCodeCombination(KeyCode.LEFT, KeyCodeCombination.SHIFT_DOWN);
         KeyCombination rightShift = new KeyCodeCombination(KeyCode.RIGHT, KeyCodeCombination.SHIFT_DOWN);
         if (upShift.match(event)) {
+            moved = true;
             hero.moveHeroForward(10);
         } else if (event.getCode() == KeyCode.UP) {
             hero.moveHeroForward(4);
+            moved = true;
         }
         if (downShift.match(event)) {
             hero.moveHeroDownward(10);
+            moved = true;
         } else if (event.getCode() == KeyCode.DOWN) {
             hero.moveHeroDownward(4);
+            moved = true;
         }
         if (rightShift.match(event)) {
             hero.moveHeroRight(10);
+            moved = true;
         } else if (event.getCode() == KeyCode.RIGHT) {
             hero.moveHeroRight(4);
+            moved = true;
         }
         if (leftShift.match(event)) {
             hero.moveHeroLeft(10);
+            moved = true;
         }
         if (event.getCode() == KeyCode.LEFT) {
             hero.moveHeroLeft(4);
+            moved = true;
         }
     }
 

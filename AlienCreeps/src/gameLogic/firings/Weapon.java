@@ -1,11 +1,10 @@
 package gameLogic.firings;
 
-import controller.TimerOfGame;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import gameLogic.Engine;
+import gameLogic.firings.movableFirings.MovableFirings;
+import gameLogic.firings.movableFirings.alienCreeps.AlienCreeps;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public enum Weapon implements Firings {
     AntiAircraft(0, 12, 30, 15, 20, 180, 1, false),
@@ -36,14 +35,117 @@ public enum Weapon implements Firings {
         setPogromist(isPogromist);
     }
 
-    @Override
-    public void shoot(TimerOfGame time) {
-
+    private ArrayList<AlienCreeps> updateTargets() {
+        return findSomeTarget();
     }
 
-    @Override
-    public void weaken(TimerOfGame time) {
+    protected ArrayList<AlienCreeps> manageTargets(ArrayList<AlienCreeps> targets) {
+        for (AlienCreeps alienCreep : targets) {
+            if (alienCreep.isDead()) {
+                Engine.getAlienCreepsKilledByWeapons().add(alienCreep);
+                AlienCreeps.getAllAlienCreeps().remove(alienCreep);
+                targets.remove(alienCreep);
+            }
+        }
+        if (targets.size() == 0 && isPogromist == false) {
+            targets = updateTargets();
+        }
+        return targets;
+    }
 
+    public static double calculateDistance(int[] coordinate1, int[] coordinate2) {
+        int differenceToX = Math.abs(coordinate1[0] - coordinate2[0]);
+        int differenceToY = Math.abs(coordinate1[1] - coordinate2[1]);
+        double distance = Math.sqrt(Math.pow(differenceToX, 2) + Math.pow(differenceToY, 2));
+        return distance;
+    }
+
+    public ArrayList<AlienCreeps> findOneTarget() {
+        double distance;
+        double minDistance = 0;
+        ArrayList<AlienCreeps> targets = new ArrayList<>();
+        for (AlienCreeps alienCreep : AlienCreeps.getAllAlienCreeps()) {
+            distance = calculateDistance(this.coordinate, alienCreep.getCoordinates());
+            if (distance < range) {
+
+                if (alienCreep.getAlienCreepTypes().getType().equals("air") && powerOnAirUnits == 0) {
+                    continue;
+                }
+                if (alienCreep.getAlienCreepTypes().getType().equals("ground") && powerOnGroundUnits == 0) {
+                    continue;
+                }//TODO refactor
+
+                if (distance < minDistance) { // find mindistance TODO refactor
+                    minDistance = distance;
+                    targets.set(0, alienCreep);
+                }
+            }
+        }
+        return targets;
+    }
+
+
+    public ArrayList<AlienCreeps> findSomeTarget() { // TODO cpy paste
+        double distance;
+        ArrayList<AlienCreeps> targets = new ArrayList<>();
+        for (AlienCreeps alienCreep : AlienCreeps.getAllAlienCreeps()) {
+            distance = calculateDistance(this.coordinate, alienCreep.getCoordinates());
+            if (distance < range) {
+                /*if (!(alienCreep.getType().equals(((Hero)this).getGun()))){
+                    continue;
+                }*/
+                if (alienCreep.getAlienCreepTypes().getType().equals("air") && powerOnAirUnits == 0) {
+                    continue;
+                }
+                if (alienCreep.getAlienCreepTypes().getType().equals("ground") && powerOnGroundUnits == 0) {
+                    continue;
+                }
+                //alienCreep.energy -= this.power * fireRate;
+                targets.add(alienCreep);
+            }
+        }
+        return targets;
+    }
+
+    private ArrayList<AlienCreeps> findWeaponTargets() {//TODO copy paste
+        if (isPogromist == false) {
+            return this.findOneTarget();
+        } else {
+            return this.findSomeTarget();
+        }
+    }
+
+    public void weaken() { // TODO copy paste
+        ArrayList<AlienCreeps> targets = findWeaponTargets();
+            for (AlienCreeps target : targets) {
+                if (target.getAlienCreepTypes().getType().equals("air")) {
+                    target.setEnergy(target.getEnergy() - powerOnAirUnits);
+                } else {
+                    target.setEnergy(target.getEnergy() - powerOnGroundUnits);
+                }
+
+                targets = manageTargets(targets);
+            }
+        
+    } // TODO Copy paste bood
+
+    public void freeze() {
+        ArrayList<AlienCreeps> targets = findWeaponTargets();
+
+            for (MovableFirings target : targets) {
+                if (target.getSpeedModified() != target.getSpeedUnmodified()) {
+                    continue;//TODO
+                }
+
+                target.setSpeedModified(((100 - speedReduction) / 100) * target.getSpeedUnmodified());
+            }
+        
+    }
+
+
+    public void shoot() {
+        weaken();
+        freeze();
     }
 
     public void setPrice(int price) {

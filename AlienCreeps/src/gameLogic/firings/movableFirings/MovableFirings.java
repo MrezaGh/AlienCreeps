@@ -1,11 +1,12 @@
 package gameLogic.firings.movableFirings;
 
 import gameLogic.firings.Firings;
+import gameLogic.firings.movableFirings.alienCreeps.AlienCreeps;
 
 import java.util.ArrayList;
 
-public abstract class MovableFirings  implements Firings {
-    private boolean movableMoved = false;
+public abstract class MovableFirings implements Firings {
+    //private boolean movableMoved = false;
     private static ArrayList<MovableFirings> allMovableFirings = new ArrayList<>();
     private int speedUnmodified;
     private int speedModified;
@@ -14,7 +15,6 @@ public abstract class MovableFirings  implements Firings {
     private int fireRate;
     private double fireRange;
     private boolean isPogromist;
-    private int[] coordinate = new int[2];
 
 
     public MovableFirings(int speedUnmodified, int speedModified, int energy, int power, int fireRate, double fireRange, boolean isPogromist) {
@@ -25,7 +25,6 @@ public abstract class MovableFirings  implements Firings {
         this.fireRate = fireRate;
         this.fireRange = fireRange;
         this.isPogromist = isPogromist;
-        this.coordinate = coordinate;
     }
 
     public void setPogromist(boolean pogromist) {
@@ -44,22 +43,13 @@ public abstract class MovableFirings  implements Firings {
         this.speedModified = speedModified;
     }
 
-    public int[] getCoordinate() {
-        return coordinate;
-    }
-
-    public void setCoordinate(int[] coordinate) {
-        this.coordinate[0] = coordinate[0];
-        this.coordinate[1] = coordinate[1];
-    }
-
-
 
     public boolean isDead() {
         if (this.energy <= 0) {
-
+            System.out.println("dead");
             return true;
         }
+
         return false;
     }
 
@@ -82,7 +72,6 @@ public abstract class MovableFirings  implements Firings {
     public void setSpeedUnmodified(int speedUnmodified) {
         this.speedUnmodified = speedUnmodified;
     }
-
 
 
     public int getEnergy() {
@@ -122,11 +111,13 @@ public abstract class MovableFirings  implements Firings {
         return allMovableFirings;
     }
 
-    public boolean isMovableMoved() {
-        return movableMoved;
-    }
+//    public boolean isMovableMoved() {
+//        return movableMoved;
+//    }
+//
+//    public void setMovableMoved(boolean movableMoved) {
+//        this.movableMoved = movableMoved;
+//    }
 
-    public void setMovableMoved(boolean movableMoved) {
-        this.movableMoved = movableMoved;
-    }
+
 }

@@ -2,11 +2,11 @@ package gameLogic.firings.movableFirings;
 
 import gameLogic.Barrack;
 import gameLogic.Engine;
+import gameLogic.firings.Firings;
 import gameLogic.firings.movableFirings.alienCreeps.AlienCreeps;
 
-import java.util.ArrayList;
-
-public class Soldier extends YourFighters {
+public class Soldier extends YourFighters implements Firings {
+    int counterForFire = 0;
 
     public Soldier() { // hero behesh ezafe kardam ta too sarbazash adesh konam
         super(true);
@@ -27,37 +27,38 @@ public class Soldier extends YourFighters {
         experience += 5;
     }
 
-    @Override
-    public void shoot() {
-        weaken();
-    }
+
 
     @Override
     public void freeze() {
 
     }
 
-    @Override
-    public void weaken() {
-        ArrayList<AlienCreeps> targets = findSomeTarget();
-            for (AlienCreeps target : targets) {
-                target.setEnergy(target.getEnergy() - this.getPower());
-                targets = manageTargets(targets);
-            }
-        findTargetOfAlienCreep(targets);
+    public void weaken(AlienCreeps alienCreep) {
+            alienCreep.setEnergy(alienCreep.getEnergy() - this.getPower());
+            alienCreep.isDead();
     }
 
     public void move(Hero hero) {
         for (int i = 0; i < hero.getAllSoldiers().size(); i++) {
             if (i == 0) {
-                setCoordinate(new int[]{hero.getCoordinate()[0] + 20, hero.getCoordinate()[1]});
+                setCoordinates(new int[]{hero.getCoordinates()[0] + 20, hero.getCoordinates()[1]});
             }
             if (i == 1) {
-                setCoordinate(new int[]{hero.getCoordinate()[0] - 20, hero.getCoordinate()[1]});
+                setCoordinates(new int[]{hero.getCoordinates()[0] - 20, hero.getCoordinates()[1]});
             }
             if (i == 2) {
-                setCoordinate(new int[]{hero.getCoordinate()[0], hero.getCoordinate()[1] + 20});
+                setCoordinates(new int[]{hero.getCoordinates()[0], hero.getCoordinates()[1] + 20});
             }
         }
     }
+
+    public int getCounterForFire() {
+        return counterForFire;
+    }
+
+    public void setCounterForFire(int counterForFire) {
+        this.counterForFire = counterForFire;
+    }
+
 }

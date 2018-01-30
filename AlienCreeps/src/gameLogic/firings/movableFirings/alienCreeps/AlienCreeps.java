@@ -1,5 +1,7 @@
 package gameLogic.firings.movableFirings.alienCreeps;
 
+import gameLogic.firings.Firings;
+import gameLogic.firings.movableFirings.Hero;
 import gameLogic.firings.movableFirings.MovableFirings;
 import gameLogic.firings.movableFirings.YourFighters;
 import gameLogic.map.Path;
@@ -8,17 +10,21 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AlienCreeps extends MovableFirings {
+public class AlienCreeps extends MovableFirings implements Firings {
     private static ArrayList<AlienCreeps> allAlienCreeps = new ArrayList<>();
+    private static ArrayList<AlienCreeps> deadAlienCreeps = new ArrayList<>();
+    private int deadLevel = 0;
     private AlienCreepTypes alienCreepTypes;
     private int energy;
     private int counterForMove = 0;
+    private int counterForFire = 0;
     private Path path;
     private int currentHomeNo = 0;
     private int moved32Pixel = 0;
     private int[] coordinates = new int[2];
     ImageView imageView = new ImageView();
-    private ArrayList<YourFighters> shooterToThis = new ArrayList<>();
+    private YourFighters shooterToThis;
+    boolean isFiring = false;
 
     public AlienCreeps(AlienCreepTypes alienCreepTypes) {
         this.alienCreepTypes = alienCreepTypes;
@@ -60,6 +66,7 @@ public class AlienCreeps extends MovableFirings {
     }
 
     public void setEnergy(int energy) {
+        System.out.println("energyized");
         this.energy = energy;
     }
 
@@ -119,22 +126,68 @@ public class AlienCreeps extends MovableFirings {
         this.imageView = imageView;
     }
 
-    public ArrayList<YourFighters> getShooterToThis() {
+    public YourFighters getShooterToThis() {
         return shooterToThis;
     }
 
-    public void setShooterToThis(ArrayList<YourFighters> shooterToThis) {
+    public void setShooterToThis(YourFighters shooterToThis) {
         this.shooterToThis = shooterToThis;
     }
 
+    public int getCounterForFire() {
+        return counterForFire;
+    }
 
-    @Override
-    public void shoot() {
+    public void setCounterForFire(int counterForFire) {
+        this.counterForFire = counterForFire;
+    }
 
+    public boolean isFiring() {
+        return isFiring;
+    }
+
+    public void setFiring(boolean firing) {
+        isFiring = firing;
+    }
+
+    public void weaken(YourFighters yourFighter) {
+        yourFighter.setEnergy(yourFighter.getEnergy() - this.getPower());
+        if (yourFighter.isDead() == true) {
+            if (yourFighter.getClass().equals(Hero.class)) {
+                Hero hero = (Hero) yourFighter;
+            }
+        }
+    }
+
+    public static ArrayList<AlienCreeps> getDeadAlienCreeps() {
+        return deadAlienCreeps;
+    }
+
+    public static void setDeadAlienCreeps(ArrayList<AlienCreeps> deadAlienCreeps) {
+        AlienCreeps.deadAlienCreeps = deadAlienCreeps;
+    }
+
+    public int getDeadLevel() {
+        return deadLevel;
+    }
+
+    public void setDeadLevel(int deadLevel) {
+        this.deadLevel = deadLevel;
+    }
+
+    public int getFireRate() {
+        return alienCreepTypes.getFireRate();
+    }
+
+    public void setFireRate(int fireRate) {
+        alienCreepTypes.setFireRate(fireRate);
     }
 
     @Override
-    public void weaken() {
-
+    public boolean isDead() {
+        if (energy <=0){
+            return true;
+        }
+        else return false;
     }
 }
